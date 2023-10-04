@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simon</title>
+    <title>Extreme Tic Tac Toe</title>
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
@@ -18,7 +18,7 @@
         <menu>
           <li><a href="index.html">Home</a></li>
           <li><a href="play.html">Play</a></li>
-          <li><a href="scores.html">Scores</a></li>
+          <li><a href="scores.html">Leaderboard</a></li>
           <li><a href="about.html">About</a></li>
         </menu>
       </nav>
@@ -33,74 +33,559 @@
         <span class="player-name">Mystery player</span>
       </div>
       <ul class="notification">
-        <li class="player-name">Tim started a new game</li>
-        <li class="player-name">Ada started a new game</li>
-        <li class="player-name">Tim scored 337</li>
+        <li class="player-name">Your Turn!</li>
+        <li class="player-name">Opponents Turn!</li>
+        <li class="player-name">Cat Game! Your record is updated to 14-17-6.</li>
       </ul>
 
       <!-- More formatting with old style HTML -->
       <br />
 
       <div>
-        <label for="count">Score</label>
-        <input type="text" id="count" value="--" readonly />
+        <fieldset>
+          <legend>Grid Size</legend>
+                <label for="three">3x3</label>
+          <input type="radio" id="three" name="varRadio" value="three" checked />
+                <label for="radio2">4x4</label>
+          <input type="radio" id="four" name="varRadio" value="four" />
+                <label for="radio3">5x5</label>
+          <input type="radio" id="five" name="varRadio" value="five" />
+        </fieldset>
       </div>
 
       <br />
 
       <div>
-        <button>Reset</button>
+        <button>Submit</button> 
+	<!--Probably will add some code to make sure it's off when game is in session-->
       </div>
 
       <br />
-
-      <div>
-        <table>
-          <tr>
-            <td>
-              <button>
-                <svg aria-hidden="true" viewBox="0 0 100 100" height="100" width="100">
-                  <!-- SVG
-                    M move <to x,y>
-                    Q quadratic curve <control point x,y> <to x,y>
-                -->
-                  <path d="M 95,5 95,95 5,95 Q 5,5 95,5" fill="green" />
-                </svg>
-              </button>
-            </td>
-            <td>
-              <button>
-                <svg aria-hidden="true" viewBox="0 0 100 100" height="100" width="100">
-                  <path d="M5,5 5,95 95,95 Q 95,5 5,5" fill="red" />
-                </svg>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button>
-                <svg aria-hidden="true" viewBox="0 0 100 100" height="100" width="100">
-                  <path d="M5,5 95,5 95,95 Q 5,95 5,5" fill="blue" />
-                </svg>
-              </button>
-            </td>
-            <td>
-              <button>
-                <svg aria-hidden="true" viewBox="0 0 100 100" height="100" width="100">
-                  <path d="M95,5 5,5 5,95 Q 95,95 95,5" fill="yellow" />
-                </svg>
-              </button>
-            </td>
-          </tr>
-        </table>
+	<!--To give you an idea. This was taken from codePen. Link is in the specification. Probably going to get replaced, but, with the css that will be later implemented, it would be a working 4x4 tic tac toe-->
+      <div class="tic-tac-toe">
+        <input class="player-1 left first-column top first-row first-diagonal turn-1" id="block1-1-1" type="radio"/>
+  	<label class="turn-1" for="block1-1-1"></label>
+  	<input class="player-1 middle second-column top first-row turn-1" id="block1-1-2" type="radio"/>
+  	<label class="turn-1" for="block1-1-2"></label>
+  	<input class="player-1 right third-column top first-row turn-1" id="block1-1-3" type="radio"/>
+  	<label class="turn-1" for="block1-1-3"></label>
+  	<input class="player-1 far-right fourth-column top first-row second-diagonal turn-1" id="block1-1-4" type="radio"/>
+  	<label class="turn-1" for="block1-1-4"></label>
+  	<input class="player-1 left first-column center second-row turn-1" id="block1-2-1" type="radio"/>
+  	<label class="turn-1" for="block1-2-1"></label>
+  	<input class="player-1 middle second-column center second-row first-diagonal turn-1" id="block1-2-2" type="radio"/>
+  	<label class="turn-1" for="block1-2-2"></label>
+  	<input class="player-1 right third-column center second-row second-diagonal turn-1" id="block1-2-3" type="radio"/>
+  	<label class="turn-1" for="block1-2-3"></label>
+  	<input class="player-1 far-right fourth-column center second-row turn-1" id="block1-2-4" type="radio"/>
+  	<label class="turn-1" for="block1-2-4"></label>
+  	<input class="player-1 left first-column bottom third-row turn-1" id="block1-3-1" type="radio"/>
+  	<label class="turn-1" for="block1-3-1"></label>
+  	<input class="player-1 middle second-column bottom third-row second-diagonal turn-1" id="block1-3-2" type="radio"/>
+  	<label class="turn-1" for="block1-3-2"></label>
+  	<input class="player-1 right third-column bottom third-row first-diagonal turn-1" id="block1-3-3" type="radio"/>
+  	<label class="turn-1" for="block1-3-3"></label>
+  	<input class="player-1 far-right fourth-column bottom third-row turn-1" id="block1-3-4" type="radio"/>
+  	<label class="turn-1" for="block1-3-4"></label>
+  	<input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-1" id="block1-4-1" type="radio"/>
+  	<label class="turn-1" for="block1-4-1"></label>
+  	<input class="player-1 middle second-column far-bottom fourth-row turn-1" id="block1-4-2" type="radio"/>
+  	<label class="turn-1" for="block1-4-2"></label>
+  	<input class="player-1 right third-column far-bottom fourth-row turn-1" id="block1-4-3" type="radio"/>
+  	<label class="turn-1" for="block1-4-3"></label>
+  	<input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-1" id="block1-4-4" type="radio"/>
+  	<label class="turn-1" for="block1-4-4"></label>
+  	<input class="player-2 left first-column top first-row first-diagonal turn-2" id="block2-1-1" type="radio"/>
+  	<label class="turn-2" for="block2-1-1"></label>
+  	<input class="player-2 middle second-column top first-row turn-2" id="block2-1-2" type="radio"/>
+  	<label class="turn-2" for="block2-1-2"></label>
+  	<input class="player-2 right third-column top first-row turn-2" id="block2-1-3" type="radio"/>
+  	<label class="turn-2" for="block2-1-3"></label>
+  	<input class="player-2 far-right fourth-column top first-row second-diagonal turn-2" id="block2-1-4" type="radio"/>
+  	<label class="turn-2" for="block2-1-4"></label>
+  	<input class="player-2 left first-column center second-row turn-2" id="block2-2-1" type="radio"/>
+  	<label class="turn-2" for="block2-2-1"></label>
+  	<input class="player-2 middle second-column center second-row first-diagonal turn-2" id="block2-2-2" type="radio"/>
+  	<label class="turn-2" for="block2-2-2"></label>
+  	<input class="player-2 right third-column center second-row second-diagonal turn-2" id="block2-2-3" type="radio"/>
+  	<label class="turn-2" for="block2-2-3"></label>
+  	<input class="player-2 far-right fourth-column center second-row turn-2" id="block2-2-4" type="radio"/>
+  	<label class="turn-2" for="block2-2-4"></label>
+  	<input class="player-2 left first-column bottom third-row turn-2" id="block2-3-1" type="radio"/>
+  	<label class="turn-2" for="block2-3-1"></label>
+  	<input class="player-2 middle second-column bottom third-row second-diagonal turn-2" id="block2-3-2" type="radio"/>
+  	<label class="turn-2" for="block2-3-2"></label>
+  	<input class="player-2 right third-column bottom third-row first-diagonal turn-2" id="block2-3-3" type="radio"/>
+  	<label class="turn-2" for="block2-3-3"></label>
+  	<input class="player-2 far-right fourth-column bottom third-row turn-2" id="block2-3-4" type="radio"/>
+  	<label class="turn-2" for="block2-3-4"></label>
+  	<input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-2" id="block2-4-1" type="radio"/>
+  	<label class="turn-2" for="block2-4-1"></label>
+  	<input class="player-2 middle second-column far-bottom fourth-row turn-2" id="block2-4-2" type="radio"/>
+  	<label class="turn-2" for="block2-4-2"></label>
+  	<input class="player-2 right third-column far-bottom fourth-row turn-2" id="block2-4-3" type="radio"/>
+  	<label class="turn-2" for="block2-4-3"></label>
+  	<input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-2" id="block2-4-4" type="radio"/>
+  	<label class="turn-2" for="block2-4-4"></label>
+  	<input class="player-1 left first-column top first-row first-diagonal turn-3" id="block3-1-1" type="radio"/>
+  	<label class="turn-3" for="block3-1-1"></label>
+  	<input class="player-1 middle second-column top first-row turn-3" id="block3-1-2" type="radio"/>
+  	<label class="turn-3" for="block3-1-2"></label>
+  	<input class="player-1 right third-column top first-row turn-3" id="block3-1-3" type="radio"/>
+  	<label class="turn-3" for="block3-1-3"></label>
+  	<input class="player-1 far-right fourth-column top first-row second-diagonal turn-3" id="block3-1-4" type="radio"/>
+  	<label class="turn-3" for="block3-1-4"></label>
+  	<input class="player-1 left first-column center second-row turn-3" id="block3-2-1" type="radio"/>
+  	<label class="turn-3" for="block3-2-1"></label>
+  	<input class="player-1 middle second-column center second-row first-diagonal turn-3" id="block3-2-2" type="radio"/>
+  	<label class="turn-3" for="block3-2-2"></label>
+  	<input class="player-1 right third-column center second-row second-diagonal turn-3" id="block3-2-3" type="radio"/>
+  	<label class="turn-3" for="block3-2-3"></label>
+  	<input class="player-1 far-right fourth-column center second-row turn-3" id="block3-2-4" type="radio"/>
+  	<label class="turn-3" for="block3-2-4"></label>
+  	<input class="player-1 left first-column bottom third-row turn-3" id="block3-3-1" type="radio"/>
+  	<label class="turn-3" for="block3-3-1"></label>
+  	<input class="player-1 middle second-column bottom third-row second-diagonal turn-3" id="block3-3-2" type="radio"/>
+  	<label class="turn-3" for="block3-3-2"></label>
+  	<input class="player-1 right third-column bottom third-row first-diagonal turn-3" id="block3-3-3" type="radio"/>
+  	<label class="turn-3" for="block3-3-3"></label>
+  	<input class="player-1 far-right fourth-column bottom third-row turn-3" id="block3-3-4" type="radio"/>
+  	<label class="turn-3" for="block3-3-4"></label>
+  	<input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-3" id="block3-4-1" type="radio"/>
+  	<label class="turn-3" for="block3-4-1"></label>
+  	<input class="player-1 middle second-column far-bottom fourth-row turn-3" id="block3-4-2" type="radio"/>
+  	<label class="turn-3" for="block3-4-2"></label>
+  	<input class="player-1 right third-column far-bottom fourth-row turn-3" id="block3-4-3" type="radio"/>
+  	<label class="turn-3" for="block3-4-3"></label>
+  	<input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-3" id="block3-4-4" type="radio"/>
+  	<label class="turn-3" for="block3-4-4"></label>
+  	<input class="player-2 left first-column top first-row first-diagonal turn-4" id="block4-1-1" type="radio"/>
+  	<label class="turn-4" for="block4-1-1"></label>
+  	<input class="player-2 middle second-column top first-row turn-4" id="block4-1-2" type="radio"/>
+  	<label class="turn-4" for="block4-1-2"></label>
+  	<input class="player-2 right third-column top first-row turn-4" id="block4-1-3" type="radio"/>
+  	<label class="turn-4" for="block4-1-3"></label>
+  	<input class="player-2 far-right fourth-column top first-row second-diagonal turn-4" id="block4-1-4" type="radio"/>
+ 	<label class="turn-4" for="block4-1-4"></label>
+ 	<input class="player-2 left first-column center second-row turn-4" id="block4-2-1" type="radio"/>
+  	<label class="turn-4" for="block4-2-1"></label>
+  	<input class="player-2 middle second-column center second-row first-diagonal turn-4" id="block4-2-2" type="radio"/>
+  	<label class="turn-4" for="block4-2-2"></label>
+  	<input class="player-2 right third-column center second-row second-diagonal turn-4" id="block4-2-3" type="radio"/>
+ 	<label class="turn-4" for="block4-2-3"></label>
+ 	<input class="player-2 far-right fourth-column center second-row turn-4" id="block4-2-4" type="radio"/>
+ 	<label class="turn-4" for="block4-2-4"></label>
+	<input class="player-2 left first-column bottom third-row turn-4" id="block4-3-1" type="radio"/>
+	<label class="turn-4" for="block4-3-1"></label>
+	<input class="player-2 middle second-column bottom third-row second-diagonal turn-4" id="block4-3-2" type="radio"/>
+	<label class="turn-4" for="block4-3-2"></label>
+	<input class="player-2 right third-column bottom third-row first-diagonal turn-4" id="block4-3-3" type="radio"/>
+	<label class="turn-4" for="block4-3-3"></label>
+	<input class="player-2 far-right fourth-column bottom third-row turn-4" id="block4-3-4" type="radio"/>
+	<label class="turn-4" for="block4-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-4" id="block4-4-1" type="radio"/>
+        <label class="turn-4" for="block4-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-4" id="block4-4-2" type="radio"/>
+        <label class="turn-4" for="block4-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-4" id="block4-4-3" type="radio"/>
+        <label class="turn-4" for="block4-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-4" id="block4-4-4" type="radio"/>
+        <label class="turn-4" for="block4-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-5" id="block5-1-1" type="radio"/>
+        <label class="turn-5" for="block5-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-5" id="block5-1-2" type="radio"/>
+        <label class="turn-5" for="block5-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-5" id="block5-1-3" type="radio"/>
+        <label class="turn-5" for="block5-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-5" id="block5-1-4" type="radio"/>
+        <label class="turn-5" for="block5-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-5" id="block5-2-1" type="radio"/>
+        <label class="turn-5" for="block5-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-5" id="block5-2-2" type="radio"/>
+        <label class="turn-5" for="block5-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-5" id="block5-2-3" type="radio"/>
+        <label class="turn-5" for="block5-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-5" id="block5-2-4" type="radio"/>
+        <label class="turn-5" for="block5-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-5" id="block5-3-1" type="radio"/>
+        <label class="turn-5" for="block5-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-5" id="block5-3-2" type="radio"/>
+        <label class="turn-5" for="block5-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-5" id="block5-3-3" type="radio"/>
+        <label class="turn-5" for="block5-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-5" id="block5-3-4" type="radio"/>
+        <label class="turn-5" for="block5-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-5" id="block5-4-1" type="radio"/>
+        <label class="turn-5" for="block5-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-5" id="block5-4-2" type="radio"/>
+        <label class="turn-5" for="block5-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-5" id="block5-4-3" type="radio"/>
+        <label class="turn-5" for="block5-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-5" id="block5-4-4" type="radio"/>
+        <label class="turn-5" for="block5-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-6" id="block6-1-1" type="radio"/>
+        <label class="turn-6" for="block6-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-6" id="block6-1-2" type="radio"/>
+        <label class="turn-6" for="block6-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-6" id="block6-1-3" type="radio"/>
+        <label class="turn-6" for="block6-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-6" id="block6-1-4" type="radio"/>
+        <label class="turn-6" for="block6-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-6" id="block6-2-1" type="radio"/>
+        <label class="turn-6" for="block6-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-6" id="block6-2-2" type="radio"/>
+        <label class="turn-6" for="block6-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-6" id="block6-2-3" type="radio"/>
+        <label class="turn-6" for="block6-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-6" id="block6-2-4" type="radio"/>
+        <label class="turn-6" for="block6-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-6" id="block6-3-1" type="radio"/>
+        <label class="turn-6" for="block6-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-6" id="block6-3-2" type="radio"/>
+        <label class="turn-6" for="block6-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-6" id="block6-3-3" type="radio"/>
+        <label class="turn-6" for="block6-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-6" id="block6-3-4" type="radio"/>
+        <label class="turn-6" for="block6-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-6" id="block6-4-1" type="radio"/>
+        <label class="turn-6" for="block6-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-6" id="block6-4-2" type="radio"/>
+        <label class="turn-6" for="block6-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-6" id="block6-4-3" type="radio"/>
+        <label class="turn-6" for="block6-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-6" id="block6-4-4" type="radio"/>
+        <label class="turn-6" for="block6-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-7" id="block7-1-1" type="radio"/>
+        <label class="turn-7" for="block7-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-7" id="block7-1-2" type="radio"/>
+        <label class="turn-7" for="block7-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-7" id="block7-1-3" type="radio"/>
+        <label class="turn-7" for="block7-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-7" id="block7-1-4" type="radio"/>
+        <label class="turn-7" for="block7-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-7" id="block7-2-1" type="radio"/>
+        <label class="turn-7" for="block7-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-7" id="block7-2-2" type="radio"/>
+        <label class="turn-7" for="block7-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-7" id="block7-2-3" type="radio"/>
+        <label class="turn-7" for="block7-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-7" id="block7-2-4" type="radio"/>
+        <label class="turn-7" for="block7-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-7" id="block7-3-1" type="radio"/>
+        <label class="turn-7" for="block7-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-7" id="block7-3-2" type="radio"/>
+        <label class="turn-7" for="block7-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-7" id="block7-3-3" type="radio"/>
+        <label class="turn-7" for="block7-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-7" id="block7-3-4" type="radio"/>
+        <label class="turn-7" for="block7-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-7" id="block7-4-1" type="radio"/>
+        <label class="turn-7" for="block7-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-7" id="block7-4-2" type="radio"/>
+        <label class="turn-7" for="block7-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-7" id="block7-4-3" type="radio"/>
+        <label class="turn-7" for="block7-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-7" id="block7-4-4" type="radio"/>
+        <label class="turn-7" for="block7-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-8" id="block8-1-1" type="radio"/>
+        <label class="turn-8" for="block8-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-8" id="block8-1-2" type="radio"/>
+        <label class="turn-8" for="block8-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-8" id="block8-1-3" type="radio"/>
+        <label class="turn-8" for="block8-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-8" id="block8-1-4" type="radio"/>
+        <label class="turn-8" for="block8-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-8" id="block8-2-1" type="radio"/>
+        <label class="turn-8" for="block8-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-8" id="block8-2-2" type="radio"/>
+        <label class="turn-8" for="block8-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-8" id="block8-2-3" type="radio"/>
+        <label class="turn-8" for="block8-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-8" id="block8-2-4" type="radio"/>
+        <label class="turn-8" for="block8-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-8" id="block8-3-1" type="radio"/>
+        <label class="turn-8" for="block8-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-8" id="block8-3-2" type="radio"/>
+        <label class="turn-8" for="block8-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-8" id="block8-3-3" type="radio"/>
+        <label class="turn-8" for="block8-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-8" id="block8-3-4" type="radio"/>
+        <label class="turn-8" for="block8-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-8" id="block8-4-1" type="radio"/>
+        <label class="turn-8" for="block8-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-8" id="block8-4-2" type="radio"/>
+        <label class="turn-8" for="block8-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-8" id="block8-4-3" type="radio"/>
+        <label class="turn-8" for="block8-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-8" id="block8-4-4" type="radio"/>
+        <label class="turn-8" for="block8-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-9" id="block9-1-1" type="radio"/>
+        <label class="turn-9" for="block9-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-9" id="block9-1-2" type="radio"/>
+        <label class="turn-9" for="block9-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-9" id="block9-1-3" type="radio"/>
+        <label class="turn-9" for="block9-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-9" id="block9-1-4" type="radio"/>
+        <label class="turn-9" for="block9-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-9" id="block9-2-1" type="radio"/>
+        <label class="turn-9" for="block9-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-9" id="block9-2-2" type="radio"/>
+        <label class="turn-9" for="block9-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-9" id="block9-2-3" type="radio"/>
+        <label class="turn-9" for="block9-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-9" id="block9-2-4" type="radio"/>
+        <label class="turn-9" for="block9-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-9" id="block9-3-1" type="radio"/>
+        <label class="turn-9" for="block9-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-9" id="block9-3-2" type="radio"/>
+        <label class="turn-9" for="block9-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-9" id="block9-3-3" type="radio"/>
+        <label class="turn-9" for="block9-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-9" id="block9-3-4" type="radio"/>
+        <label class="turn-9" for="block9-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-9" id="block9-4-1" type="radio"/>
+        <label class="turn-9" for="block9-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-9" id="block9-4-2" type="radio"/>
+        <label class="turn-9" for="block9-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-9" id="block9-4-3" type="radio"/>
+        <label class="turn-9" for="block9-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-9" id="block9-4-4" type="radio"/>
+        <label class="turn-9" for="block9-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-10" id="block10-1-1" type="radio"/>
+        <label class="turn-10" for="block10-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-10" id="block10-1-2" type="radio"/>
+        <label class="turn-10" for="block10-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-10" id="block10-1-3" type="radio"/>
+        <label class="turn-10" for="block10-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-10" id="block10-1-4" type="radio"/>
+        <label class="turn-10" for="block10-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-10" id="block10-2-1" type="radio"/>
+        <label class="turn-10" for="block10-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-10" id="block10-2-2" type="radio"/>
+        <label class="turn-10" for="block10-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-10" id="block10-2-3" type="radio"/>
+        <label class="turn-10" for="block10-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-10" id="block10-2-4" type="radio"/>
+        <label class="turn-10" for="block10-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-10" id="block10-3-1" type="radio"/>
+        <label class="turn-10" for="block10-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-10" id="block10-3-2" type="radio"/>
+        <label class="turn-10" for="block10-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-10" id="block10-3-3" type="radio"/>
+        <label class="turn-10" for="block10-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-10" id="block10-3-4" type="radio"/>
+        <label class="turn-10" for="block10-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-10" id="block10-4-1" type="radio"/>
+        <label class="turn-10" for="block10-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-10" id="block10-4-2" type="radio"/>
+        <label class="turn-10" for="block10-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-10" id="block10-4-3" type="radio"/>
+        <label class="turn-10" for="block10-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-10" id="block10-4-4" type="radio"/>
+        <label class="turn-10" for="block10-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-11" id="block11-1-1" type="radio"/>
+        <label class="turn-11" for="block11-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-11" id="block11-1-2" type="radio"/>
+        <label class="turn-11" for="block11-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-11" id="block11-1-3" type="radio"/>
+        <label class="turn-11" for="block11-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-11" id="block11-1-4" type="radio"/>
+        <label class="turn-11" for="block11-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-11" id="block11-2-1" type="radio"/>
+        <label class="turn-11" for="block11-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-11" id="block11-2-2" type="radio"/>
+        <label class="turn-11" for="block11-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-11" id="block11-2-3" type="radio"/>
+        <label class="turn-11" for="block11-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-11" id="block11-2-4" type="radio"/>
+        <label class="turn-11" for="block11-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-11" id="block11-3-1" type="radio"/>
+        <label class="turn-11" for="block11-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-11" id="block11-3-2" type="radio"/>
+        <label class="turn-11" for="block11-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-11" id="block11-3-3" type="radio"/>
+        <label class="turn-11" for="block11-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-11" id="block11-3-4" type="radio"/>
+        <label class="turn-11" for="block11-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-11" id="block11-4-1" type="radio"/>
+        <label class="turn-11" for="block11-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-11" id="block11-4-2" type="radio"/>
+        <label class="turn-11" for="block11-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-11" id="block11-4-3" type="radio"/>
+        <label class="turn-11" for="block11-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-11" id="block11-4-4" type="radio"/>
+        <label class="turn-11" for="block11-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-12" id="block12-1-1" type="radio"/>
+        <label class="turn-12" for="block12-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-12" id="block12-1-2" type="radio"/>
+        <label class="turn-12" for="block12-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-12" id="block12-1-3" type="radio"/>
+        <label class="turn-12" for="block12-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-12" id="block12-1-4" type="radio"/>
+        <label class="turn-12" for="block12-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-12" id="block12-2-1" type="radio"/>
+        <label class="turn-12" for="block12-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-12" id="block12-2-2" type="radio"/>
+        <label class="turn-12" for="block12-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-12" id="block12-2-3" type="radio"/>
+        <label class="turn-12" for="block12-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-12" id="block12-2-4" type="radio"/>
+        <label class="turn-12" for="block12-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-12" id="block12-3-1" type="radio"/>
+        <label class="turn-12" for="block12-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-12" id="block12-3-2" type="radio"/>
+        <label class="turn-12" for="block12-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-12" id="block12-3-3" type="radio"/>
+        <label class="turn-12" for="block12-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-12" id="block12-3-4" type="radio"/>
+        <label class="turn-12" for="block12-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-12" id="block12-4-1" type="radio"/>
+        <label class="turn-12" for="block12-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-12" id="block12-4-2" type="radio"/>
+        <label class="turn-12" for="block12-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-12" id="block12-4-3" type="radio"/>
+        <label class="turn-12" for="block12-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-12" id="block12-4-4" type="radio"/>
+        <label class="turn-12" for="block12-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-13" id="block13-1-1" type="radio"/>
+        <label class="turn-13" for="block13-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-13" id="block13-1-2" type="radio"/>
+        <label class="turn-13" for="block13-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-13" id="block13-1-3" type="radio"/>
+        <label class="turn-13" for="block13-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-13" id="block13-1-4" type="radio"/>
+        <label class="turn-13" for="block13-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-13" id="block13-2-1" type="radio"/>
+        <label class="turn-13" for="block13-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-13" id="block13-2-2" type="radio"/>
+        <label class="turn-13" for="block13-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-13" id="block13-2-3" type="radio"/>
+        <label class="turn-13" for="block13-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-13" id="block13-2-4" type="radio"/>
+        <label class="turn-13" for="block13-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-13" id="block13-3-1" type="radio"/>
+        <label class="turn-13" for="block13-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-13" id="block13-3-2" type="radio"/>
+        <label class="turn-13" for="block13-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-13" id="block13-3-3" type="radio"/>
+        <label class="turn-13" for="block13-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-13" id="block13-3-4" type="radio"/>
+        <label class="turn-13" for="block13-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-13" id="block13-4-1" type="radio"/>
+        <label class="turn-13" for="block13-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-13" id="block13-4-2" type="radio"/>
+        <label class="turn-13" for="block13-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-13" id="block13-4-3" type="radio"/>
+        <label class="turn-13" for="block13-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-13" id="block13-4-4" type="radio"/>
+        <label class="turn-13" for="block13-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-14" id="block14-1-1" type="radio"/>
+        <label class="turn-14" for="block14-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-14" id="block14-1-2" type="radio"/>
+        <label class="turn-14" for="block14-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-14" id="block14-1-3" type="radio"/>
+        <label class="turn-14" for="block14-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-14" id="block14-1-4" type="radio"/>
+        <label class="turn-14" for="block14-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-14" id="block14-2-1" type="radio"/>
+        <label class="turn-14" for="block14-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-14" id="block14-2-2" type="radio"/>
+        <label class="turn-14" for="block14-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-14" id="block14-2-3" type="radio"/>
+        <label class="turn-14" for="block14-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-14" id="block14-2-4" type="radio"/>
+        <label class="turn-14" for="block14-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-14" id="block14-3-1" type="radio"/>
+        <label class="turn-14" for="block14-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-14" id="block14-3-2" type="radio"/>
+        <label class="turn-14" for="block14-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-14" id="block14-3-3" type="radio"/>
+        <label class="turn-14" for="block14-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-14" id="block14-3-4" type="radio"/>
+        <label class="turn-14" for="block14-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-14" id="block14-4-1" type="radio"/>
+        <label class="turn-14" for="block14-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-14" id="block14-4-2" type="radio"/>
+        <label class="turn-14" for="block14-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-14" id="block14-4-3" type="radio"/>
+        <label class="turn-14" for="block14-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-14" id="block14-4-4" type="radio"/>
+        <label class="turn-14" for="block14-4-4"></label>
+        <input class="player-1 left first-column top first-row first-diagonal turn-15" id="block15-1-1" type="radio"/>
+        <label class="turn-15" for="block15-1-1"></label>
+        <input class="player-1 middle second-column top first-row turn-15" id="block15-1-2" type="radio"/>
+        <label class="turn-15" for="block15-1-2"></label>
+        <input class="player-1 right third-column top first-row turn-15" id="block15-1-3" type="radio"/>
+        <label class="turn-15" for="block15-1-3"></label>
+        <input class="player-1 far-right fourth-column top first-row second-diagonal turn-15" id="block15-1-4" type="radio"/>
+        <label class="turn-15" for="block15-1-4"></label>
+        <input class="player-1 left first-column center second-row turn-15" id="block15-2-1" type="radio"/>
+        <label class="turn-15" for="block15-2-1"></label>
+        <input class="player-1 middle second-column center second-row first-diagonal turn-15" id="block15-2-2" type="radio"/>
+        <label class="turn-15" for="block15-2-2"></label>
+        <input class="player-1 right third-column center second-row second-diagonal turn-15" id="block15-2-3" type="radio"/>
+        <label class="turn-15" for="block15-2-3"></label>
+        <input class="player-1 far-right fourth-column center second-row turn-15" id="block15-2-4" type="radio"/>
+        <label class="turn-15" for="block15-2-4"></label>
+        <input class="player-1 left first-column bottom third-row turn-15" id="block15-3-1" type="radio"/>
+        <label class="turn-15" for="block15-3-1"></label>
+        <input class="player-1 middle second-column bottom third-row second-diagonal turn-15" id="block15-3-2" type="radio"/>
+        <label class="turn-15" for="block15-3-2"></label>
+        <input class="player-1 right third-column bottom third-row first-diagonal turn-15" id="block15-3-3" type="radio"/>
+        <label class="turn-15" for="block15-3-3"></label>
+        <input class="player-1 far-right fourth-column bottom third-row turn-15" id="block15-3-4" type="radio"/>
+        <label class="turn-15" for="block15-3-4"></label>
+        <input class="player-1 left first-column far-bottom fourth-row second-diagonal turn-15" id="block15-4-1" type="radio"/>
+        <label class="turn-15" for="block15-4-1"></label>
+        <input class="player-1 middle second-column far-bottom fourth-row turn-15" id="block15-4-2" type="radio"/>
+        <label class="turn-15" for="block15-4-2"></label>
+        <input class="player-1 right third-column far-bottom fourth-row turn-15" id="block15-4-3" type="radio"/>
+        <label class="turn-15" for="block15-4-3"></label>
+        <input class="player-1 far-right fourth-column far-bottom fourth-row first-diagonal turn-15" id="block15-4-4" type="radio"/>
+        <label class="turn-15" for="block15-4-4"></label>
+        <input class="player-2 left first-column top first-row first-diagonal turn-16" id="block16-1-1" type="radio"/>
+        <label class="turn-16" for="block16-1-1"></label>
+        <input class="player-2 middle second-column top first-row turn-16" id="block16-1-2" type="radio"/>
+        <label class="turn-16" for="block16-1-2"></label>
+        <input class="player-2 right third-column top first-row turn-16" id="block16-1-3" type="radio"/>
+        <label class="turn-16" for="block16-1-3"></label>
+        <input class="player-2 far-right fourth-column top first-row second-diagonal turn-16" id="block16-1-4" type="radio"/>
+        <label class="turn-16" for="block16-1-4"></label>
+        <input class="player-2 left first-column center second-row turn-16" id="block16-2-1" type="radio"/>
+        <label class="turn-16" for="block16-2-1"></label>
+        <input class="player-2 middle second-column center second-row first-diagonal turn-16" id="block16-2-2" type="radio"/>
+        <label class="turn-16" for="block16-2-2"></label>
+        <input class="player-2 right third-column center second-row second-diagonal turn-16" id="block16-2-3" type="radio"/>
+        <label class="turn-16" for="block16-2-3"></label>
+        <input class="player-2 far-right fourth-column center second-row turn-16" id="block16-2-4" type="radio"/>
+        <label class="turn-16" for="block16-2-4"></label>
+        <input class="player-2 left first-column bottom third-row turn-16" id="block16-3-1" type="radio"/>
+        <label class="turn-16" for="block16-3-1"></label>
+        <input class="player-2 middle second-column bottom third-row second-diagonal turn-16" id="block16-3-2" type="radio"/>
+        <label class="turn-16" for="block16-3-2"></label>
+        <input class="player-2 right third-column bottom third-row first-diagonal turn-16" id="block16-3-3" type="radio"/>
+        <label class="turn-16" for="block16-3-3"></label>
+        <input class="player-2 far-right fourth-column bottom third-row turn-16" id="block16-3-4" type="radio"/>
+        <label class="turn-16" for="block16-3-4"></label>
+        <input class="player-2 left first-column far-bottom fourth-row second-diagonal turn-16" id="block16-4-1" type="radio"/>
+        <label class="turn-16" for="block16-4-1"></label>
+        <input class="player-2 middle second-column far-bottom fourth-row turn-16" id="block16-4-2" type="radio"/>
+        <label class="turn-16" for="block16-4-2"></label>
+        <input class="player-2 right third-column far-bottom fourth-row turn-16" id="block16-4-3" type="radio"/>
+        <label class="turn-16" for="block16-4-3"></label>
+        <input class="player-2 far-right fourth-column far-bottom fourth-row first-diagonal turn-16" id="block16-4-4" type="radio"/>
+        <label class="turn-16" for="block16-4-4"></label>
+        <div class="end">
+	  <h3></h3><a href="">Restart</a>
+        </div>
       </div>
     </main>
 
     <footer>
       <hr />
-      <span class="text-reset">Author Name(s)</span>
+      <span class="text-reset">Ryan Baxter</span>
       <br />
-      <a href="https://github.com/webprogramming260/simon-html">GitHub</a>
+      <a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a>
     </footer>
   </body>
 </html>
