@@ -33,6 +33,7 @@ For this Delverable, I built out the structure using HTML
 * **HTML** 4 HTML pages, representing a score page, the gameplay page, the home page, and the about page
 * **Links** All 4 pages can be linked to each other, via navigation, and via the login
 * **Text** When selecting a grid size, text is implemented
+* **Images** Not applicable at this time. There's a placeholder for it in the about page.
 * **Login** The login placeholder and submit represents the eventual login form
 * **Database** The record updating is going to be a call to the database, and so are the three tables in the score page
 * **Websocket** The entire 256 radio buttons shown in the game is going to represent the input of the player and the websocket call of the opponent. Also the notification bar is websocket.
