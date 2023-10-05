@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Scores</title>
+    <title>Leaderboard</title>
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
     <header>
-      <h1>Simon<sup>&reg;</sup></h1>
+      <h1>Extreme Tic Tac Toe<sup>&reg;</sup></h1>
 
       <nav>
         <menu>
           <li><a href="index.html">Home</a></li>
           <li><a href="play.html">Play</a></li>
-          <li><a href="scores.html">Scores</a></li>
+          <li><a href="scores.html">Leaderboard</a></li>
           <li><a href="about.html">About</a></li>
         </menu>
       </nav>
@@ -23,33 +23,37 @@
     </header>
 
     <main>
+      <!--Order is by Wins - losses, then by ties (or really number of games played)-->
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Score</th>
-            <th>Date</th>
+            <th>Wins</th>
+            <th>Losses</th>
+	    <th>Ties</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>도윤 이</td>
+            <td>Chess Battle Advanced</td>
             <td>34</td>
-            <td>May 20, 2021</td>
+            <td>14</td>
+	    <td>35</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Annie James</td>
-            <td>29</td>
-            <td>June 2, 2021</td>
+            <td>Jimmy</td>
+            <td>70</td>
+            <td>60</td>
+	    <td>100</td>
           </tr>
           <tr>
             <td>3</td>
-            <td>Gunter Spears</td>
+            <td>You</td>
             <td>7</td>
-            <td>July 3, 2020</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
