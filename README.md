@@ -37,3 +37,7 @@ For this Delverable, I built out the structure using HTML
 * **Login** The login placeholder and submit represents the eventual login form
 * **Database** The record updating is going to be a call to the database, and so are the three tables in the score page
 * **Websocket** The entire 256 radio buttons shown in the game is going to represent the input of the player and the websocket call of the opponent. Also the notification bar is websocket.
+
+## CSS Deliverable
+For this Deliverable, I edited the format of my startup using CSS.
+*
