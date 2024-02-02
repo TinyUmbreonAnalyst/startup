@@ -3,6 +3,8 @@
 It's time for a test of concentration, speed, and skill. Tap the rock as fast as you can possibly can! Play with friends, or seek to just improve it by yourself. The faster you tap, the faster it breaks! You can try to see how fast you can break it, or how far you get in a minute! Play it your way, and have fun!
 ## Design
 
+![A crude sketch showing two pages of my project. Top one is playing the rock breaking simulator, in the middle of the game. The next shows the game after it is done.](RockBreakingSimulator.jpg)
+
 Rough Sketch of how website is designed.
 ## Key Features
 * Secure Login over HTTPS
