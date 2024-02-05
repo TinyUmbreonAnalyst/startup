@@ -12,7 +12,7 @@ Rough Sketch of how website is designed.
 * Ability to choose to play for when you break the rock, or how far you get in a certain time period.
 * Ability to only start timing on imput
 * Ability to see other's scores, on multiplayer, when you finish your round
-* Storage of times in both time per rock, and percent per rock broken in miniut
+* Storage of times in both time per rock, and percent per rock broken in minute
 
 ## Technologies
 I am going to use the following technologies in the following ways
@@ -28,8 +28,18 @@ I am going to use the following technologies in the following ways
 * **WebSocket** - For multiplayer. Will see the other player's score when they are done, and whether they won or loss.
 * **React** - Application ported to use the React web framework
 * **Database** The record updating is going to be a call to the database, and so are the three tables in the score page
-* **Websocket** The entire 256 radio buttons shown in the game is going to represent the input of the player and the websocket call of the opponent. Also the notification bar is websocket.
+* **Websocket** Whenever a player completes a game with someone else (either breaking the rock, or time runs out),
+                they will be notified of the other's players score, and whether they win or lose
 
-## CSS Deliverable
-For this Deliverable, I edited the format of my startup using CSS.
-*
+## HTML Deliverable
+For my delivearable, I did the following things:
+* Cloned simon application, and used it as the base for my game
+* Edited the Simon HTML files to allow for my application, such as:
+  - changing the header in all pages to be a navigation bar linking to the correct pages
+  - changing the footer to be a link to this site, with my name
+  - adding in the base html for the game (just a checkbox currently. CSS and Javascript will change that)
+  - added in method to set it to breaking rocks in a time limit, or how long it takes to break a single rock.
+  - Added placeholder table for database gets. Database updates will probably be updated via JS.
+  - Added placeholder websocket calls, to get other players score if in multiplayer.
+* Deployed it to my site at tinyplushyumbreon.com
+
