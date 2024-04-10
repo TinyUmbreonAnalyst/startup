@@ -1,11 +1,8 @@
 const btnDescriptions = [
-    { file: 'sound1.mp3', hue: 120 },
-    { file: 'sound2.mp3', hue: 0 },
-    { file: 'sound3.mp3', hue: 60 },
-    { file: 'sound4.mp3', hue: 240 },
+    { file: 'mine.wav'},
   ];
   
-  class Button {
+  class Rock {
     constructor(description, el) {
       this.el = el;
       this.hue = description.hue;
@@ -37,22 +34,14 @@ const btnDescriptions = [
   }
   
   class Game {
-    buttons;
-    allowPlayer;
-    sequence;
-    playerPlaybackPos;
-    mistakeSound;
-  
+    button;
+
     constructor() {
-      this.buttons = new Map();
-      this.allowPlayer = false;
-      this.sequence = [];
-      this.playerPlaybackPos = 0;
-      this.mistakeSound = loadSound('error.mp3');
+      this.button = new Rock();
   
-      document.querySelectorAll('.game-button').forEach((el, i) => {
+      document.querySelectorAll('.rock').forEach((el, i) => {
         if (i < btnDescriptions.length) {
-          this.buttons.set(el.id, new Button(btnDescriptions[i], el));
+          this.buttons.set(el.id, new Rock(btnDescriptions[i], el));
         }
       });
   
@@ -62,7 +51,6 @@ const btnDescriptions = [
   
     async pressButton(button) {
       if (this.allowPlayer) {
-        this.allowPlayer = false;
         await this.buttons.get(button.id).press(1.0);
   
         if (this.sequence[this.playerPlaybackPos].el.id === button.id) {
@@ -73,7 +61,6 @@ const btnDescriptions = [
             this.updateScore(this.sequence.length - 1);
             await this.playSequence();
           }
-          this.allowPlayer = true;
         } else {
           this.saveScore(this.sequence.length - 1);
           this.mistakeSound.play();
