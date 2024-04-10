@@ -43,3 +43,12 @@ For my delivearable, I did the following things:
   - Added placeholder websocket calls, to get other players score if in multiplayer.
 * Deployed it to my site at tinyplushyumbreon.com
 
+## CSS Deliverable
+For this Deliverable, I did the following things
+* Clonded Simon application, and deployed it, using it as a reference for my base
+* Edited and repurposed the Simon CSS files for my CSS stuff, mainly by using the same main background
+* Figured out how to make a unique representation of my game on the file, including playing around with the z-index attribute, which allowed elements to overlap each other
+* Laid the groundwork for the Java Script application
+* Successfully installed Bootstrap in my code
+* Deployed to my site at tinyplushyumbreon.com
+
