@@ -35,85 +35,59 @@ const btnDescriptions = [
   
   class Game {
     button;
+    allowPlayer;
+    mineSound;
+    boinkSound;
+    score;
+    time;
+    mode;
 
     constructor() {
-      this.button = new Rock();
+      this.mode = setMode();
+      this.button = new Map();
+      this.allowPlayer = false;
+      this.mineSound = loadSound('mine.wav');
+      this.mineSound.playbackRate = 5;
+      this.boinkSound = loadSound('boink.wav');
+      this.boinkSound.playbackRate = 5;
+      this.score = setScore(this.mode);
+      this.time = setTime(this.time);
+      
   
       document.querySelectorAll('.rock').forEach((el, i) => {
         if (i < btnDescriptions.length) {
-          this.buttons.set(el.id, new Rock(btnDescriptions[i], el));
+          this.button.set(el.id, new Rock(btnDescriptions[i], el));
         }
       });
   
       const playerNameEl = document.querySelector('.player-name');
       playerNameEl.textContent = this.getPlayerName();
     }
+
+    //time is true
+    setMode() {
+        document.getElementById('#time')
+    }
   
     async pressButton(button) {
       if (this.allowPlayer) {
-        await this.buttons.get(button.id).press(1.0);
-  
-        if (this.sequence[this.playerPlaybackPos].el.id === button.id) {
-          this.playerPlaybackPos++;
-          if (this.playerPlaybackPos === this.sequence.length) {
-            this.playerPlaybackPos = 0;
-            this.addButton();
-            this.updateScore(this.sequence.length - 1);
-            await this.playSequence();
-          }
+        this.boinkSound.play();
         } else {
-          this.saveScore(this.sequence.length - 1);
-          this.mistakeSound.play();
-          await this.buttonDance(2);
+          this.mineSound.play();
         }
-      }
     }
   
-    async reset() {
-      this.allowPlayer = false;
-      this.playerPlaybackPos = 0;
-      this.sequence = [];
-      this.updateScore('--');
-      await this.buttonDance(1);
-      this.addButton();
-      await this.playSequence();
-      this.allowPlayer = true;
-    }
   
     getPlayerName() {
       return localStorage.getItem('userName') ?? 'Mystery player';
     }
   
-    async playSequence() {
-      await delay(500);
-      for (const btn of this.sequence) {
-        await btn.press(1.0);
-        await delay(100);
-      }
-    }
-  
-    addButton() {
-      const btn = this.getRandomButton();
-      this.sequence.push(btn);
-    }
-  
+    //TODO: Add 3 more objects
     updateScore(score) {
       const scoreEl = document.querySelector('#score');
       scoreEl.textContent = score;
     }
   
-    async buttonDance(laps = 1) {
-      for (let step = 0; step < laps; step++) {
-        for (const btn of this.buttons.values()) {
-          await btn.press(0.0);
-        }
-      }
-    }
-  
-    getRandomButton() {
-      let buttons = Array.from(this.buttons.values());
-      return buttons[Math.floor(Math.random() * this.buttons.size)];
-    }
   
     saveScore(score) {
       const userName = this.getPlayerName();
@@ -168,10 +142,10 @@ const btnDescriptions = [
   
   // Simulate chat messages that will come over WebSocket
   setInterval(() => {
-    const score = Math.floor(Math.random() * 3000);
+    const score = Math.floor(Math.random() * 100);
     const chatText = document.querySelector('#player-messages');
     chatText.innerHTML =
-      `<div class="event"><span class="player-event">Eich</span> scored ${score}</div>` +
+      `<div class="event"><span class="player-event">Tiny</span> scored ${score}</div>` +
       chatText.innerHTML;
-  }, 5000);
+  }, 60000);
   
