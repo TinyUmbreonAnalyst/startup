@@ -49,9 +49,7 @@
           </div>
           <div id="player-messages">
             <div class="event"><span class="player-event">You</span> broke rock in 30 seconds!</div>
-            <div class="event"><span class="player-event">You</span> sent rematch request!</div>
             <div class="event"><span class="player-event">Tiny</span> broke rock in 42 seconds!</div>
-            <div class="event"><span class="player-event">Tiny</span> Accepted Rematch Request</div>
             <div class="event"><span class="system-event">Game</span> connected</div>
           </div>
           <div class="mode-box">
@@ -62,8 +60,7 @@
                 <label for="radio2">Rocks breaks per second</label>
               <input type="radio" id="time" name="varRadio" value="timeCheck" checked/>
             </fieldset>
-            <div><input class="onlineCheck" type="checkbox" id ="onlineCheck" name = "isOnline" checked/>Online Game</div>
-            <span class="submit-button"> <button>Submit</button> </span>
+            <span class="submit-button"> <button class="btn btn-primary">Start Game</button> </span>
             <!--Probably will add some code to make sure it's off when game is in session-->
           </div>
         </div>
@@ -86,5 +83,8 @@
         <span><a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a></span>
       </div>
     </footer>
+
+    <!-- Script is located at the bottom because it references HTML elements during initialization -->
+    <script src="play.js"></script>
   </body>
 </html>
