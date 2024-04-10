@@ -6,73 +6,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Playing RockBreaking Game</title>
     <link rel="icon" href="favicon.ico" />
-  </head>
-  <body>
-    <!-- Use header, main, and footer elements to give semantic structure -->
-    <header>
-      <h1>RockBreaking Game<sup>&reg;</sup></h1>
+    <link rel="stylesheet" href="play.css" />
+    <link rel="stylesheet" href="main.css" />
 
-      <!-- Navigation elements -->
-      <nav>
-        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
-        <menu>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="play.html">Play</a></li>
-          <li><a href="scores.html">Leaderboard</a></li>
-          <li><a href="about.html">About</a></li>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+
+  </head>
+  <body class="bg-dark text-light">
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header class="container-fluid">
+      <nav class="navbar fixed-top navbar-dark">
+        <a class="navbar-brand" href="#">Rock-Breaking Game<sup>&reg;</sup></a>
+        <menu class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="play.html">Play</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="scores.html">Leaderboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
         </menu>
       </nav>
-
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-      <hr />
     </header>
 
-    <main>
-      <div class="players">
-        Player:
-        <span class="player-name">You</span>
-      </div>
-      <div>
-        <!-- Websocket stuff. Will show the other player's time taken to break rock on their completion, or how many rocks they broke when there time is up. Will also show status of making a new multiplayer game with them -->
-        You broke your rock in 30s! Sending data to other participant
-        Rematch Request sent.
-	Tiny broke his rock in 42s!
-        Rematch Request accepted. Starting new game....
-	
-      </div>
-      <!-- More formatting with old style HTML -->
-      <br />
-
-      <div>
-        <fieldset>
-          <legend>Mode of play</legend>
+    <main class="bg-secondary">
+        <div class="players">
+          Player:
+          <span class="player-name">You</span>
+          <div>
+            Opponent:
+            <span class="player-name">Tiny</span>
+          </div>
+          <div id="player-messages">
+            <div class="event"><span class="player-event">You</span> broke rock in 30 seconds!</div>
+            <div class="event"><span class="player-event">You</span> sent rematch request!</div>
+            <div class="event"><span class="player-event">Tiny</span> broke rock in 42 seconds!</div>
+            <div class="event"><span class="player-event">Tiny</span> Accepted Rematch Request</div>
+            <div class="event"><span class="system-event">Game</span> connected</div>
+          </div>
+          <div class="mode-box">
+            <fieldset>
+              <legend>Mode of play</legend>
                 <label for="three">Seconds per rock break</label>
-          <input type="radio" id="rock" name="varRadio" value="rockCheck" checked />
+              <input type="radio" id="rock" name="varRadio" value="rockCheck" />
                 <label for="radio2">Rocks breaks per second</label>
-          <input type="radio" id="time" name="varRadio" value="timeCheck" />
-        </fieldset>
+              <input type="radio" id="time" name="varRadio" value="timeCheck" checked/>
+            </fieldset>
+            <div><input class="onlineCheck" type="checkbox" id ="onlineCheck" name = "isOnline" checked/>Online Game</div>
+            <span class="submit-button"> <button>Submit</button> </span>
+            <!--Probably will add some code to make sure it's off when game is in session-->
+          </div>
+        </div>
+      <div class="game container-fluid">
+        <div class="top">1000</div>
+        <div class="rockContainer">
+	        <input class="rock" type="button" id ="rock" name = "varRock" value="Score: 30 seconds" />
+          <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak"/></div>
+          <img class="weakContainer X red" src="redX.png"/>
+          <img class="weakContainer X gold" src="goldX.png"/>
+        </div>
+        
+        <div class="bottom">0</div>
       </div>
-
-      <br />
-
-      <div>
-        <button>Submit</button> 
-	<!--Probably will add some code to make sure it's off when game is in session-->
-      </div>
-
-      <br />
-
-      <div>
-	<input type="checkbox" id ="rock" name = "varRock" value = "rockState" />	
-      </div>
-
     </main>
 
-    <footer>
-      <hr />
-      <span class="text-reset">Ryan Baxter</span>
-      <br />
-      <a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a>
+    <footer class="bg-dark text-white-50">
+      <div class="container-fluid">
+        <span class="text-reset author">Ryan Baxter</span>
+        <span><a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a></span>
+      </div>
     </footer>
   </body>
 </html>
