@@ -103,6 +103,8 @@
     border: none;
     width: 70vw;
     height: 70vw;
+    color: rgb(213, 204, 42);
+    font-size: xx-large;
     box-shadow: 0 4px rgba(59, 46, 20);
     min-width: 350px;
     min-height: 350px;

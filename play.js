@@ -41,6 +41,7 @@ const btnDescriptions = [
     score;
     time;
     mode;
+    val;
 
     constructor() {
       this.mode = false;
@@ -50,7 +51,6 @@ const btnDescriptions = [
       this.boinkSound = loadSound('boink.mp3');
       this.score = 1000;
       this.time = 0;
-      this.isInactive = false;
       this.val = 0;
       this.setMode();
   
@@ -104,7 +104,7 @@ const btnDescriptions = [
             await this.Timer();
         } else {
             //score mode
-
+            await this.Scorer();
         }
     }
 
@@ -116,6 +116,26 @@ const btnDescriptions = [
             this.generateWeakSpot();
         }
         clearInterval(id);
+    }
+
+    countDown() {
+        
+    }
+
+    async Scorer() {
+        const s = this.score;
+        const count = 0;
+        while (score > 0 && count < 20) {
+            delay(3000);
+            this.hideWeakSpot();
+            this.generateWeakSpot();
+            if (this.score === s) { //inactivity timer
+                count = count + 1;
+            }
+            else {
+                count = 0;
+            }
+        }
     }
 
     hideWeakSpot() {
@@ -143,7 +163,7 @@ const btnDescriptions = [
         if (rand >= 5) {
             const ypos = Math.random() *100 - 50;
             const xpos = Math.random() * 100;
-            while (checkDistance(xpos, ypos, 0, 50) > 50 ** 2) {
+            while (this.checkDistance(xpos, ypos, 50, 0) > 50 ** 2) {
                 ypos = Math.random() *100 - 50;
                 xpos = Math.random() * 100;
             }
@@ -163,8 +183,10 @@ const btnDescriptions = [
             weakContainer.style.setProperty("margin-left", `${xpos}%`);
             weakContainer.style.setProperty("margin-top", `${ypos}%`);
         }
-        
-        
+    }
+
+    checkDistance(xpos, ypos, cxpos, cypos) {
+        return (xpos - cxpos) **2 + (ypos - cypos) **2;
     }
 
     adjustTimer() {
