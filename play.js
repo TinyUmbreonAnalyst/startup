@@ -50,6 +50,8 @@ const btnDescriptions = [
       this.boinkSound = loadSound('boink.mp3');
       this.score = 1000;
       this.time = 0;
+      this.isInactive = false;
+      this.val = 0;
       this.setMode();
   
       document.querySelectorAll('.rock').forEach((el, i) => {
@@ -87,7 +89,7 @@ const btnDescriptions = [
     }
 
     async startGame() {
-        var modeBox = document.querySelector(".mode-box");
+        const modeBox = document.querySelector(".mode-box");
         modeBox.setAttribute("display", "none"); //hide it
         this.countdown();
         this.allowPlayer = true;
@@ -97,7 +99,77 @@ const btnDescriptions = [
     }
 
     async LaunchTimer() {
+        if (this.mode) {
+            //timer mode
+            await this.Timer();
+        } else {
+            //score mode
 
+        }
+    }
+
+    async Timer() {
+        var id = setInterval(() => this.adjustTimer(), 100);
+        while (this.time > 0) {
+            delay(3000);
+            this.hideWeakSpot();
+            this.generateWeakSpot();
+        }
+        clearInterval(id);
+    }
+
+    hideWeakSpot() {
+        document.querySelectorAll(".X").forEach((el, i) => {
+        if (el.style.zindex >= 0) {
+            if (el.classList.contains("red")) {
+                el.style.setProperty("z-index", "-2");
+            } else {
+                el.style.setProperty("z-index", "-3");
+            }
+        }
+        const weakContainer = document.querySelector(".weakContainer");
+        if (weakContainer.style.zindex >= 0) {
+            weakContainer.style.setProperty("z-index", "-5");
+        }
+        const weakPoint = document.querySelector(".weakPoint");
+        if (weakPoint.style.zindex >= 0) {
+            weakPoint.setProperty("z-index", "-4");
+        }
+       });
+    }
+
+    generateWeakSpot() {
+        const rand = Math.random() * 10;
+        if (rand >= 5) {
+            const ypos = Math.random() *100 - 50;
+            const xpos = Math.random() * 100;
+            while (checkDistance(xpos, ypos, 0, 50) > 50 ** 2) {
+                ypos = Math.random() *100 - 50;
+                xpos = Math.random() * 100;
+            }
+            this.val = Math.random() * 50;
+            if (rand >= 9.5 ) {
+                const gold = document.querySelector(".gold");
+                gold.style.setProperty("z-index", "3");
+                this.val = this.val + 150;
+                //umb maybe?
+            }
+            else {
+                const red = document.querySelector(".red");
+                red.style.setProperty("z-index", "2");
+                this.val = val + 10;
+            }
+            const weakContainer = document.querySelector("weakContainer");
+            weakContainer.style.setProperty("margin-left", `${xpos}%`);
+            weakContainer.style.setProperty("margin-top", `${ypos}%`);
+        }
+        
+        
+    }
+
+    adjustTimer() {
+        this.time = this.time + .1 * this.modeCount();
+        this.setTimer(this.time);
     }
 
     setScore(number) {

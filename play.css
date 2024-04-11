@@ -72,7 +72,7 @@
   .game .weakContainer {
     display: flex;
     flex: 1;
-    z-index: 4;
+    z-index: -4;
     vertical-align: middle;
     align-self: center;
     margin-left: 25%;
@@ -139,11 +139,11 @@
   .weakPoint {
     position:inherit;
     background: rgba(0, 0, 0, 0);
+    z-index: 5;
     border: none;
     width: 2vw;
     height: 2vw;
     float: left;
-    z-index: 5;
     vertical-align: middle;
     align-self: center;
   }
