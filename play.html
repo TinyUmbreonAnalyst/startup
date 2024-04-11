@@ -52,9 +52,9 @@
             <fieldset>
               <legend>Mode of play</legend>
                 <label for="three">Seconds per rock break</label>
-              <input type="radio" id="rock" name="varRadio" value="rockCheck" />
+              <input type="radio" id="rock" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
                 <label for="radio2">Rocks breaks per second</label>
-              <input type="radio" id="time" name="varRadio" value="timeCheck" checked/>
+              <input type="radio" id="time" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
             </fieldset>
             <span class="submit-button"> <button class="btn btn-primary">Start Game</button> </span>
             <!--Probably will add some code to make sure it's off when game is in session-->

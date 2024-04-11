@@ -83,12 +83,17 @@
   }
 
   .red {
-    z-index: 2 !important;
+    z-index: -2 !important;
   }
 
   .gold {
-    z-index: -2 !important;
+    z-index: -3 !important;
   }
+
+  .mode-box {
+    display: block;
+  }
+
 
   .rock {
     flex: 1;

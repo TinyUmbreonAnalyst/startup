@@ -1,5 +1,5 @@
 const btnDescriptions = [
-    { file: 'mine.wav'},
+    { file: 'mine.mp3'},
   ];
   
   class Rock {
@@ -43,16 +43,14 @@ const btnDescriptions = [
     mode;
 
     constructor() {
-      this.mode = setMode();
+      this.mode = false;
       this.button = new Map();
       this.allowPlayer = false;
-      this.mineSound = loadSound('mine.wav');
-      this.mineSound.playbackRate = 5;
-      this.boinkSound = loadSound('boink.wav');
-      this.boinkSound.playbackRate = 5;
-      this.score = setScore(this.mode);
-      this.time = setTime(this.time);
-      
+      this.mineSound = loadSound('mine.mp3');
+      this.boinkSound = loadSound('boink.mp3');
+      this.score = 1000;
+      this.time = 0;
+      this.setMode();
   
       document.querySelectorAll('.rock').forEach((el, i) => {
         if (i < btnDescriptions.length) {
@@ -66,14 +64,19 @@ const btnDescriptions = [
 
     //time is true
     setMode() {
-        document.getElementById('#time')
+        const timeButtons = document.querySelector('#time');
+        if (timeButtons.checked) {
+            this.mode = true;
+        } else {
+            this.mode = false;
+        }
     }
   
     async pressButton(button) {
       if (this.allowPlayer) {
-        this.boinkSound.play();
+        this.mineSound.play();
         } else {
-          this.mineSound.play();
+          this.boinkSound.play();
         }
     }
   
@@ -137,15 +140,20 @@ const btnDescriptions = [
   }
   
   function loadSound(filename) {
-    return new Audio('assets/' + filename);
+    let audio = new Audio('assets/' + filename);
+    return audio;
   }
   
   // Simulate chat messages that will come over WebSocket
   setInterval(() => {
     const score = Math.floor(Math.random() * 100);
     const chatText = document.querySelector('#player-messages');
-    chatText.innerHTML =
-      `<div class="event"><span class="player-event">Tiny</span> scored ${score}</div>` +
-      chatText.innerHTML;
+    chatText.innerHTML = chatText.innerHTML
+       +`<div class="event"><span class="player-event">Tiny</span> broke rock in ${score} seconds!</div>`;
+    if (chatText.childElementCount > 9) {
+        while (chatText.childElementCount > 9) {
+            chatText.removeChild(chatText.childNodes[0]);
+        }
+    }
   }, 60000);
   
