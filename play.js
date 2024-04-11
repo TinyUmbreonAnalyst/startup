@@ -82,12 +82,13 @@ const btnDescriptions = [
             top.classList.remove("timer");
             bottom.classList.add("timer");
             bottom.classList.remove("score");
-            this.setScore(100);
+            this.setScore(1000);
             this.setTimer(0.0);
         }
     }
 
     async startGame() {
+        this.setMode();
         document.querySelectorAll(".mode-box").forEach((el) => {
             el.style.setProperty("display", "none");
         });
@@ -97,6 +98,8 @@ const btnDescriptions = [
         document.querySelectorAll(".mode-box").forEach((el) => {
             el.style.setProperty("display", "block");
         });
+        this.hideWeakSpot();
+        this.val = 0;
         //do some other stuff, like ferrying up the scores
     }
 
@@ -121,10 +124,10 @@ const btnDescriptions = [
         const rock = document.querySelector(".rock");
         rock.setAttribute("value", `Score: ${this.score} ore`);
     }
-
+    
     async countDown() {
         const rock = document.querySelector(".rock");
-        rock.style.setProperty("color", "green");
+        rock.style.setProperty("color", "rgb(31, 148, 23)");
         this.playSound(1.0);
         rock.setAttribute("value", "3");
         await delay(1000);
@@ -156,7 +159,6 @@ const btnDescriptions = [
 
    async Scorer() {
         var id = setInterval(() => this.adjustTimer(), 1000);
-        this.score = 100;
         let s = this.score;
         let count = 0;
         while (this.score > 0 && count < 20) {
@@ -183,22 +185,28 @@ const btnDescriptions = [
 
     hideWeakSpot() {
         document.querySelectorAll(".X").forEach((el) => {
-        if (el.style.zindex >= 0) {
-            if (el.classList.contains("red")) {
-                el.style.setProperty("z-index", "-2");
-            } else {
-                el.style.setProperty("z-index", "-3");
+            if (el.style.zIndex >= 0) {
+                if (el.classList.contains("red")) {
+                    el.style.setProperty("z-index", "-2");
+                } else {
+                    el.style.setProperty("z-index", "-3");
+                }
             }
-        }
+        });
         const weakContainer = document.querySelector(".weakContainer");
-        if (weakContainer.style.zindex >= 0) {
+        if (weakContainer.style.zIndex >= 0) {
             weakContainer.style.setProperty("z-index", "-5");
         }
         const weakPoint = document.querySelector(".weakPoint");
-        if (weakPoint.style.zindex >= 0) {
-            weakPoint.setProperty("z-index", "-4");
+        if (weakPoint.style.zIndex >= 0) {
+            weakPoint.style.setProperty("z-index", "-4");
         }
-       });
+    }
+
+    async weakPointHit () {
+        this.setScore(this.score + this.val);
+        this.val = 0;
+        this.hideWeakSpot();
     }
 
     generateWeakSpot() {
@@ -210,19 +218,22 @@ const btnDescriptions = [
                 ypos = Math.random() *100 - 50;
                 xpos = Math.random() * 100;
             }
-            this.val = Math.random() * 50;
+            this.val = Math.round(Math.random() * 50)* this.modeCount()* -1;
             if (rand >= 9.5 ) {
                 const gold = document.querySelector(".gold");
-                gold.style.setProperty("z-index", "3");
-                this.val = this.val + 150;
+                gold.style.setProperty("z-index", "4");
+                this.val = this.val + 150 * this.modeCount()* -1;
                 //umb maybe?
             }
             else {
                 const red = document.querySelector(".red");
-                red.style.setProperty("z-index", "2");
+                red.style.setProperty("z-index", "3");
                 this.val = this.val + 10;
             }
-            const weakContainer = document.querySelector("div .weakContainer");
+            const weakContainer = document.querySelector("div .weakContainer")
+            weakContainer.style.setProperty("z-index", "3");
+            const weakPoint = document.querySelector(".weakPoint");
+            weakPoint.style.setProperty("z-index", "5");
             weakContainer.style.setProperty("margin-left", `${xpos}%`);
             weakContainer.style.setProperty("margin-top", `${ypos}%`);
         }
@@ -240,6 +251,7 @@ const btnDescriptions = [
     setScore(number) {
         const scorer = document.querySelector(".score");
         scorer.textContent = `${number}`;
+        this.score = number;
     }
 
     setTimer(time) {

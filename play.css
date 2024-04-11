@@ -90,7 +90,7 @@
   }
 
   .gold {
-    z-index: -3 !important;
+    z-index: inherit;
     position: inherit;
     height: inherit;
     width: inherit;

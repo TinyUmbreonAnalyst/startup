@@ -57,14 +57,13 @@
               <input type="radio" id="time" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
             </fieldset>
             <span class="submit-button mode-box"> <button class="btn btn-primary" onclick="game.startGame()">Start Game</button> </span>
-            <!--Probably will add some code to make sure it's off when game is in session-->
           </div>
         </div>
       <div class="game container-fluid">
         <div class="top">100</div>
         <div class="rockContainer">
 	        <input class="rock" type="button" id ="rock" name = "varRock" value="" onclick="game.pressButton(this)"/>
-          <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak"/>
+          <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak" onclick="game.weakPointHit()"/>
             <img class="X red" src="redX.png"/>
             <img class="X gold" src="goldX.png"/>
           </div>
