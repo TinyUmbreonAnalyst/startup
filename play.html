@@ -43,37 +43,32 @@
         <div class="players">
           Player:
           <span class="player-name">You</span>
-          <div>
-            Opponent:
-            <span class="player-name">Tiny</span>
-          </div>
           <div id="player-messages">
             <div class="event"><span class="player-event">You</span> broke rock in 30 seconds!</div>
-            <div class="event"><span class="player-event">You</span> sent rematch request!</div>
             <div class="event"><span class="player-event">Tiny</span> broke rock in 42 seconds!</div>
-            <div class="event"><span class="player-event">Tiny</span> Accepted Rematch Request</div>
             <div class="event"><span class="system-event">Game</span> connected</div>
           </div>
           <div class="mode-box">
-            <fieldset>
-              <legend>Mode of play</legend>
+            <fieldset class="mode-box">
+              <legend class="mode-box">Mode of play</legend>
                 <label for="three">Seconds per rock break</label>
-              <input type="radio" id="rock" name="varRadio" value="rockCheck" />
+              <input type="radio" id="rock" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
                 <label for="radio2">Rocks breaks per second</label>
-              <input type="radio" id="time" name="varRadio" value="timeCheck" checked/>
+              <input type="radio" id="time" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
             </fieldset>
-            <div><input class="onlineCheck" type="checkbox" id ="onlineCheck" name = "isOnline" checked/>Online Game</div>
-            <span class="submit-button"> <button>Submit</button> </span>
-            <!--Probably will add some code to make sure it's off when game is in session-->
+            <span class="submit-button mode-box"> <button class="btn btn-primary" onclick="game.startGame()">Start Game</button> </span>
           </div>
         </div>
       <div class="game container-fluid">
-        <div class="top">1000</div>
+        <div class="top">100</div>
         <div class="rockContainer">
-	        <input class="rock" type="button" id ="rock" name = "varRock" value="Score: 30 seconds" />
-          <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak"/></div>
-          <img class="weakContainer X red" src="redX.png"/>
-          <img class="weakContainer X gold" src="goldX.png"/>
+	        <input class="rock" type="button" id ="rock" name = "varRock" value="" onclick="game.pressButton(this)"/>
+          <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak" onclick="game.weakPointHit()"/>
+            <img class="X red" src="redX.png"/>
+            <img class="X gold" src="goldX.png"/>
+          </div>
+          
+          
         </div>
         
         <div class="bottom">0</div>
@@ -86,5 +81,8 @@
         <span><a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a></span>
       </div>
     </footer>
+
+    <!-- Script is located at the bottom because it references HTML elements during initialization -->
+    <script src="play.js"></script>
   </body>
 </html>

@@ -72,7 +72,7 @@
   .game .weakContainer {
     display: flex;
     flex: 1;
-    z-index: 4;
+    z-index: -4;
     vertical-align: middle;
     align-self: center;
     margin-left: 25%;
@@ -83,12 +83,23 @@
   }
 
   .red {
-    z-index: 2 !important;
+    z-index: -2 !important;
+    position: inherit;
+    height: inherit;
+    width: inherit;
   }
 
   .gold {
-    z-index: -2 !important;
+    z-index: inherit;
+    position: inherit;
+    height: inherit;
+    width: inherit;
   }
+
+  .mode-box {
+    display: block;
+  }
+
 
   .rock {
     flex: 1;
@@ -98,6 +109,8 @@
     border: none;
     width: 70vw;
     height: 70vw;
+    color: rgb(213, 204, 42);
+    font-size: xx-large;
     box-shadow: 0 4px rgba(59, 46, 20);
     min-width: 350px;
     min-height: 350px;
@@ -134,11 +147,11 @@
   .weakPoint {
     position:inherit;
     background: rgba(0, 0, 0, 0);
+    z-index: 5;
     border: none;
     width: 2vw;
     height: 2vw;
     float: left;
-    z-index: 5;
     vertical-align: middle;
     align-self: center;
   }

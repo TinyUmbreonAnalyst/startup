@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Breaking Game  Home</title>
     <link rel="icon" href="favicon.ico" />
+
+    <script src="login.js"></script>
     <link rel="stylesheet" href="main.css" />
 
     <link
@@ -42,9 +44,11 @@
       <div>
         <h1>Welcome</h1>
         <p>Login to play</p>
-        <form method="get" action="play.html">
+        <div>
           <input type="text" id="name" placeholder="Your name here" />
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button class="btn btn-primary" onclick="login()">Login</button>
+        </div>
+        <p>Note: To Play Offline, select "Play" in the Navigation Bar above.</p>
       </div>
     </main>
 

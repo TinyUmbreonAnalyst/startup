@@ -40,59 +40,46 @@
       <div>
         <!--Order is by Wins - losses, then by ties (or really number of games played)-->
         <table class="table table-warning table-striped-columns">
- 	  100 Clicks Mode
+ 	  1000 Ore Mode
           <thead class="table-dark">
             <tr>
               <th>#</th>
               <th>Name</th>
               <th>Time (seconds)</th>
+              <th>As Of</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Chess Battle Advanced</td>
-              <td>15.1</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jimmy</td>
-              <td>20.2</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>You</td>
-              <td>25.9</td>
-            </tr>
+          <tbody id="score-ores">
           </tbody>
         </table>
       </div>
       <div>
         <table class="table table-warning table-striped-columns">
- 	  Time mode (10 click rocks broken in 1 minute)
+ 	  Time Mode 
           <thead class="table-dark">
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Rocks Broken</th>
+              <th>10 units of Ore Mined</th>
+              <th>As Of</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="time-ores">
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table class="table table-warning table-striped-columns">
+ 	  Overall Ore Mined
+          <thead class="table-dark">
             <tr>
-              <td>1</td>
-              <td>Chess Battle Advanced</td>
-              <td>29.8</td>
+              <th>#</th>
+              <th>Name</th>
+              <th>Ore Collected</th>
+              <th>As Of</th>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Jimmy</td>
-              <td>25.5</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>You</td>
-              <td>21.6</td>
-            </tr>
+          </thead>
+          <tbody id="ore-total">
           </tbody>
         </table>
       </div>
@@ -104,5 +91,7 @@
         <a href="https://github.com/TinyUmbreonAnalyst/startup">GitHub</a>
       </div>
     </footer>
+    <script src="scores.js"></script>
   </body>
 </html>
+
