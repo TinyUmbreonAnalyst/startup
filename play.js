@@ -35,7 +35,6 @@ const btnDescriptions = [
   class Game {
     button;
     allowPlayer;
-    mineSound;
     boinkSound;
     score;
     time;
@@ -46,7 +45,6 @@ const btnDescriptions = [
       this.mode = true;
       this.button = new Map();
       this.allowPlayer = false;
-      this.mineSound = loadSound('mine.mp3');
       this.boinkSound = loadSound('boink.mp3');
       this.score = 0;
       this.time = 0;
@@ -100,7 +98,17 @@ const btnDescriptions = [
         });
         this.hideWeakSpot();
         this.val = 0;
-        //do some other stuff, like ferrying up the scores
+        const totalScore = this.getOreTotal();
+        this.saveScore(totalScore); //ferry up the scores
+    }
+
+    getOreTotal() {
+        if (this.mode) {
+            return this.score;
+        }
+        else {
+            return 1000 - this.score; //overflow check
+        }
     }
 
     async LaunchTimer() {
@@ -116,7 +124,12 @@ const btnDescriptions = [
     async Timer() {
         var id = setInterval(() => this.adjustTimer(), 1000);
         while (this.time > 0) {
-            await delay(3000);
+            for (let i = 0; i < 30; i++) {
+                if(this.time <= 0) {
+                    break;
+                }
+                await delay(100); 
+            } //for more precision
             this.hideWeakSpot();
             this.generateWeakSpot();
         }
@@ -282,47 +295,95 @@ const btnDescriptions = [
       return localStorage.getItem('userName') ?? 'Mystery player';
     }
   
-    //TODO: Add 3 more objects
-    updateScore(score) {
-      const scoreEl = document.querySelector('#score');
-      scoreEl.textContent = score;
-    }
   
-  
-    saveScore(score) {
+    saveScore(totalScore) {
       const userName = this.getPlayerName();
-      let scores = [];
-      const scoresText = localStorage.getItem('scores');
-      if (scoresText) {
-        scores = JSON.parse(scoresText);
-      }
-      scores = this.updateScores(userName, score, scores);
-  
-      localStorage.setItem('scores', JSON.stringify(scores));
-    }
-  
-    updateScores(userName, score, scores) {
-      const date = new Date().toLocaleDateString();
-      const newScore = { name: userName, score: score, date: date };
-  
-      let found = false;
-      for (const [i, prevScore] of scores.entries()) {
-        if (score > prevScore.score) {
-          scores.splice(i, 0, newScore);
-          found = true;
-          break;
+      if (userName !== "Mystery player") { //not offline game
+        const bestScore = this.getBestScore();
+        let scores = [];
+        let bests = [];
+        const scoresText = localStorage.getItem('totalScores');
+        const bestText = this.getBestText();
+        if (scoresText) {
+            scores = JSON.parse(scoresText);
+        }
+        if (bestText) {
+            bests = JSON.parse(bestText);
+        }
+        scores = this.updateTotalScores(userName, totalScore, scores);
+        bests = this.updateBestScores(userName, bestScore, bests);
+        localStorage.setItem('totalScores', JSON.stringify(scores));
+        if(this.mode) {
+            localStorage.setItem("bestScores", JSON.stringify(bests));
+        } else {
+            localStorage.setItem("bestTimes", JSON.stringify(bests));
         }
       }
+    }
+
+    getBestScore() {
+        if (this.mode) {
+            return this.score;
+        }
+        return this.time;
+    }
+
+    getBestText() {
+        if (this.mode) {
+            return localStorage.getItem("bestScores");
+        }
+        return localStorage.getItem("bestTimes");
+    }
   
-      if (!found) {
-        scores.push(newScore);
+    //in this case, add score. 
+    updateTotalScores(userName, totalScore, scores) {
+      const date = new Date().toLocaleDateString();
+
+      let index = -1;
+      let prevScore = 0;
+      for(const [i, validScore] of scores.entries()) {
+        if(userName === validScore.name) {
+            prevScore = validScore.score;
+            index = i;
+            break;
+        }
       }
-  
-      if (scores.length > 10) {
-        scores.length = 10;
+      const newScore = { name: userName, score: totalScore + prevScore, date: date};
+      if (prevScore === 0) {
+        scores.push(newScore); //new username
+      } else {
+        scores.splice(index, 1, newScore);
       }
-  
       return scores;
+    }
+
+    updateBestScores(userName, bestScore, scores) {
+        const date = new Date().toLocaleDateString();
+  
+        let index = -2;
+        for(const [i, validScore] of scores.entries()) {
+          if(userName === validScore.name ) {
+            index = -1;
+            if(this.isBetterThan(bestScore, validScore.score)){
+                index = i;
+            }
+            break;
+          }
+        }
+        const newScore = { name: userName, score: bestScore, date: date};
+        if (index === -2) {
+          scores.push(newScore); //new username
+        } else if(index !== -1){
+          scores.splice(index, 1, newScore); //better score
+        }
+        return scores;
+      }
+
+    isBetterThan(newScore, oldScore) {
+        if(mode) {
+            return (newScore > oldScore);
+        }
+        return (newScore < oldScore); //time here
     }
   }
   

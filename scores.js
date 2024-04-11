@@ -1,21 +1,36 @@
 function loadScores() {
-  let scores = [];
-  const timeOresText = localStorage.getItem('scores');
+  let totalScores = [];
+  let bestScores = [];
+  let timeScores = [];
+  const totalOresText = localStorage.getItem('totalScores');
+  const bestScoresText = localStorage.getItem('bestScores');
+  const bestTimesText = localStorage.getItem('bestTimes');
 
-  if (scoresText) {
-    scores = JSON.parse(scoresText);
+  if (totalOresText) {
+    totalScores = JSON.parse(totalOresText);
   }
-
+  if (bestScoresText) {
+    bestScores = JSON.parse(bestScoresText);
+  }
+  if (bestTimesText) {
+    timeScores = JSON.parse(bestTimesText);
+  } 
   const tableTimeBodyEl = document.querySelector('#time-ores');
   const tableOreBodyEl = document.querySelector('#score-ores');
   const tableTotalBodyEl = document.querySelector('#ore-total');
 
-  //TODO: Fix this
+  populateTable(totalScores, tableTimeBodyEl);
+  populateTable(bestScores, tableOreBodyEl);
+  populateTable( timeScores, tableTotalBodyEl);
+}
+
+function populateTable(scores, tableBodyEl) {
   if (scores.length) {
     for (const [i, score] of scores.entries()) {
       const positionTdEl = document.createElement('td');
       const nameTdEl = document.createElement('td');
       const scoreTdEl = document.createElement('td');
+      const dateTdEl = document.createElement('td');
 
       positionTdEl.textContent = i + 1;
       nameTdEl.textContent = score.name;
