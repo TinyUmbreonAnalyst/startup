@@ -65,19 +65,66 @@ const btnDescriptions = [
     //time is true
     setMode() {
         const timeButtons = document.querySelector('#time');
+        const top = document.querySelector(".top");
+        const bottom = document.querySelector(".bottom");
         if (timeButtons.checked) {
             this.mode = true;
+            top.classList.add("timer");
+            top.classList.remove("score");
+            bottom.classList.add("score");
+            bottom.classList.remove("timer");
+            this.setScore(0);
+            this.setTimer(60.0);
         } else {
             this.mode = false;
+            top.classList.add("score");
+            top.classList.remove("timer");
+            bottom.classList.add("timer");
+            bottom.classList.remove("score");
+            this.setScore(1000);
+            this.setTimer(0.0);
         }
+    }
+
+    async startGame() {
+        var modeBox = document.querySelector(".mode-box");
+        modeBox.setAttribute("display", "none"); //hide it
+        this.countdown();
+        this.allowPlayer = true;
+        await this.LaunchTimer(); //aka, play the game
+        this.allowPlayer = false;
+        //do some other stuff, like ferrying up the scores
+    }
+
+    async LaunchTimer() {
+
+    }
+
+    setScore(number) {
+        const scorer = document.querySelector(".score");
+        scorer.textContent = `${number}`;
+    }
+
+    setTimer(time) {
+        const scorer = document.querySelector(".timer");
+        scorer.textContent = `${time}`;
     }
   
     async pressButton(button) {
       if (this.allowPlayer) {
         this.mineSound.play();
+        this.score = this.score + this.modeCount();
+        this.setScore(this.score);
         } else {
           this.boinkSound.play();
         }
+    }
+
+    modeCount() {
+        if (mode) {
+            return 1;
+        }
+        return -1;
     }
   
   
