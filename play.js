@@ -5,13 +5,12 @@ const btnDescriptions = [
   class Rock {
     constructor(description, el) {
       this.el = el;
-      this.hue = description.hue;
       this.sound = loadSound(description.file);
       this.paint(25);
     }
   
     paint(level) {
-      const background = `hsl(${this.hue}, 100%, ${level}%)`;
+      const background = `hsl(39.2, 100%, ${level}%)`;
       this.el.style.backgroundColor = background;
     }
   
@@ -83,25 +82,28 @@ const btnDescriptions = [
             top.classList.remove("timer");
             bottom.classList.add("timer");
             bottom.classList.remove("score");
-            this.setScore(1000);
+            this.setScore(100);
             this.setTimer(0.0);
         }
     }
 
     async startGame() {
-        const modeBox = document.querySelector(".mode-box");
-        modeBox.setAttribute("display", "none"); //hide it
-        this.countdown();
-        this.allowPlayer = true;
+        document.querySelectorAll(".mode-box").forEach((el) => {
+            el.style.setProperty("display", "none");
+        });
+        await this.countDown();
         await this.LaunchTimer(); //aka, play the game
         this.allowPlayer = false;
+        document.querySelectorAll(".mode-box").forEach((el) => {
+            el.style.setProperty("display", "block");
+        });
         //do some other stuff, like ferrying up the scores
     }
 
     async LaunchTimer() {
         if (this.mode) {
             //timer mode
-            await this.Timer();
+           await this.Timer();
         } else {
             //score mode
             await this.Scorer();
@@ -111,22 +113,44 @@ const btnDescriptions = [
     async Timer() {
         var id = setInterval(() => this.adjustTimer(), 100);
         while (this.time > 0) {
-            delay(3000);
+            await delay(3000);
             this.hideWeakSpot();
             this.generateWeakSpot();
         }
         clearInterval(id);
     }
 
-    countDown() {
-        
+    async countDown() {
+        const rock = document.querySelector(".rock");
+        rock.style.setProperty("color", "green");
+        this.playSound(1.0);
+        rock.textContent = "3";
+        await delay(1000);
+        rock.style.setProperty("color", "yellow");
+        rock.textContent = "2";
+        await delay(1000);
+        rock.style.setProperty("color", "red");
+        rock.textContent = "1";
+        await delay(1000);
+        this.allowPlayer = true;
+        rock.style.setProperty("color", "rgb(213, 204, 42)");
+        rock.textContent = "Start!";
     }
 
-    async Scorer() {
-        const s = this.score;
-        const count = 0;
-        while (score > 0 && count < 20) {
-            delay(3000);
+    async playSound(volume) {
+        const sound = loadSound("CountDown.wav");
+        return new Promise((playResolve) => {
+          sound.volume = volume;
+          sound.onended = playResolve;
+          sound.play();
+        });
+    }
+
+   async Scorer() {
+        let s = this.score;
+        let count = 0;
+        while (this.score > 0 && count < 20) {
+            await delay(3000);
             this.hideWeakSpot();
             this.generateWeakSpot();
             if (this.score === s) { //inactivity timer
@@ -134,12 +158,13 @@ const btnDescriptions = [
             }
             else {
                 count = 0;
+                s = this.score;
             }
         }
     }
 
     hideWeakSpot() {
-        document.querySelectorAll(".X").forEach((el, i) => {
+        document.querySelectorAll(".X").forEach((el) => {
         if (el.style.zindex >= 0) {
             if (el.classList.contains("red")) {
                 el.style.setProperty("z-index", "-2");
@@ -161,8 +186,8 @@ const btnDescriptions = [
     generateWeakSpot() {
         const rand = Math.random() * 10;
         if (rand >= 5) {
-            const ypos = Math.random() *100 - 50;
-            const xpos = Math.random() * 100;
+            let ypos = Math.random() *100 - 50;
+            let xpos = Math.random() * 100;
             while (this.checkDistance(xpos, ypos, 50, 0) > 50 ** 2) {
                 ypos = Math.random() *100 - 50;
                 xpos = Math.random() * 100;
@@ -177,9 +202,9 @@ const btnDescriptions = [
             else {
                 const red = document.querySelector(".red");
                 red.style.setProperty("z-index", "2");
-                this.val = val + 10;
+                this.val = this.val + 10;
             }
-            const weakContainer = document.querySelector("weakContainer");
+            const weakContainer = document.querySelector("div .weakContainer");
             weakContainer.style.setProperty("margin-left", `${xpos}%`);
             weakContainer.style.setProperty("margin-top", `${ypos}%`);
         }
@@ -190,7 +215,7 @@ const btnDescriptions = [
     }
 
     adjustTimer() {
-        this.time = this.time + .1 * this.modeCount();
+        this.time = this.time + .1 * Math.round(this.modeCount());
         this.setTimer(this.time);
     }
 
@@ -202,11 +227,12 @@ const btnDescriptions = [
     setTimer(time) {
         const scorer = document.querySelector(".timer");
         scorer.textContent = `${time}`;
+        this.time = time;
     }
   
     async pressButton(button) {
       if (this.allowPlayer) {
-        this.mineSound.play();
+        this.button.get(button.id).press(1.0);
         this.score = this.score + this.modeCount();
         this.setScore(this.score);
         } else {
@@ -215,7 +241,7 @@ const btnDescriptions = [
     }
 
     modeCount() {
-        if (mode) {
+        if (this.mode) {
             return 1;
         }
         return -1;
