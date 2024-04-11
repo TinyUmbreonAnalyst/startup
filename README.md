@@ -21,11 +21,8 @@ I am going to use the following technologies in the following ways
 * **JavaScript** - Used for login, specifying game to play, and helps to play the game, and for unique animation if the won the game.
 * **Service** - Backend endpoints for:
   - login
-  - finding games that are in queue to be played
   - storing and accessing data, in both formats.
-* **DB** - storing scores and users in a database
 * **Login** - Register and login users. Credentials and time record stored in database. Can't play without login
-* **WebSocket** - For multiplayer. Will see the other player's score when they are done, and whether they won or loss.
 * **React** - Application ported to use the React web framework
 * **Database** The record updating is going to be a call to the database, and so are the three tables in the score page
 * **Websocket** Whenever a player completes a game with someone else (either breaking the rock, or time runs out),
