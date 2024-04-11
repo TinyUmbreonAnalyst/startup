@@ -52,3 +52,10 @@ For this Deliverable, I did the following things
 * Successfully installed Bootstrap in my code
 * Deployed to my site at tinyplushyumbreon.com
 
+## JS Deliverable
+For this deliverable, I did the following:
+* Added Js code to the login to keep track of online players, and allow offline players to play the game without saving thier score
+* Implemented the necessarry features to play the game
+* Implemented the features necessary to store the scores of the player in a mock database (if they login)
+* Implemented the mechanism to show the database in my websites scores subpage
+* Deployed simon-js to subdomain simon, correctly, this time, I may add.
