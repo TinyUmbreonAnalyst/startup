@@ -84,10 +84,16 @@
 
   .red {
     z-index: -2 !important;
+    position: inherit;
+    height: inherit;
+    width: inherit;
   }
 
   .gold {
     z-index: -3 !important;
+    position: inherit;
+    height: inherit;
+    width: inherit;
   }
 
   .mode-box {

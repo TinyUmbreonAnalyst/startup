@@ -43,12 +43,12 @@ const btnDescriptions = [
     val;
 
     constructor() {
-      this.mode = false;
+      this.mode = true;
       this.button = new Map();
       this.allowPlayer = false;
       this.mineSound = loadSound('mine.mp3');
       this.boinkSound = loadSound('boink.mp3');
-      this.score = 1000;
+      this.score = 0;
       this.time = 0;
       this.val = 0;
       this.setMode();
@@ -111,30 +111,38 @@ const btnDescriptions = [
     }
 
     async Timer() {
-        var id = setInterval(() => this.adjustTimer(), 100);
+        var id = setInterval(() => this.adjustTimer(), 1000);
         while (this.time > 0) {
             await delay(3000);
             this.hideWeakSpot();
             this.generateWeakSpot();
         }
         clearInterval(id);
+        const rock = document.querySelector(".rock");
+        rock.setAttribute("value", `Score: ${this.score} ore`);
     }
 
     async countDown() {
         const rock = document.querySelector(".rock");
         rock.style.setProperty("color", "green");
         this.playSound(1.0);
-        rock.textContent = "3";
+        rock.setAttribute("value", "3");
         await delay(1000);
         rock.style.setProperty("color", "yellow");
-        rock.textContent = "2";
+        rock.setAttribute("value", "2");
         await delay(1000);
         rock.style.setProperty("color", "red");
-        rock.textContent = "1";
+        rock.setAttribute("value", "1");
         await delay(1000);
         this.allowPlayer = true;
         rock.style.setProperty("color", "rgb(213, 204, 42)");
-        rock.textContent = "Start!";
+        rock.setAttribute("value", "Start!");
+        this.removeText(rock);
+    }
+
+    async removeText(rock) {
+        await delay(1000);
+        rock.setAttribute("value", "");
     }
 
     async playSound(volume) {
@@ -147,10 +155,17 @@ const btnDescriptions = [
     }
 
    async Scorer() {
+        var id = setInterval(() => this.adjustTimer(), 1000);
+        this.score = 100;
         let s = this.score;
         let count = 0;
         while (this.score > 0 && count < 20) {
-            await delay(3000);
+            for (let i = 0; i < 30; i++) {
+                if(this.score <= 0) {
+                    break;
+                }
+                await delay(100); 
+            }
             this.hideWeakSpot();
             this.generateWeakSpot();
             if (this.score === s) { //inactivity timer
@@ -161,6 +176,9 @@ const btnDescriptions = [
                 s = this.score;
             }
         }
+        clearInterval(id);
+        const rock = document.querySelector(".rock");
+        rock.setAttribute("value", `Time: ${this.time} seconds`);
     }
 
     hideWeakSpot() {
@@ -215,7 +233,7 @@ const btnDescriptions = [
     }
 
     adjustTimer() {
-        this.time = this.time + .1 * Math.round(this.modeCount());
+        this.time = this.time + this.modeCount();
         this.setTimer(this.time);
     }
 
@@ -233,7 +251,7 @@ const btnDescriptions = [
     async pressButton(button) {
       if (this.allowPlayer) {
         this.button.get(button.id).press(1.0);
-        this.score = this.score + this.modeCount();
+        this.score = this.score - this.modeCount();
         this.setScore(this.score);
         } else {
           this.boinkSound.play();
@@ -242,9 +260,9 @@ const btnDescriptions = [
 
     modeCount() {
         if (this.mode) {
-            return 1;
+            return -1;
         }
-        return -1;
+        return 1;
     }
   
   
