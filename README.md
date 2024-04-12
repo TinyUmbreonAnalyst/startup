@@ -56,3 +56,11 @@ For this deliverable, I did the following:
 * Implemented the features necessary to store the scores of the player in a mock database (if they login)
 * Implemented the mechanism to show the database in my websites scores subpage
 * Deployed simon-js to subdomain simon, correctly, this time, I may add.
+
+## Services Deliverable
+For this Deliverable, I did the following:
+* Installed Node.js in the web application, allowing it to make service calls to a database
+* Made a third-party service call over in about .js
+* replaced the button in game with a actual image of a rock, with some animation
+* Replaced the x with an image of a sparkle, to better indicate for users to click them to spawn points
+* Several other bug fixes.
