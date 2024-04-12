@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TinyUmbreonAnalyst/startup/tree/startup-service"
+    "url": "git+https://github.com/TinyUmbreonAnalyst/startup.git#startup-service"
   },
-  "author": "",
+  "author": "TinyUmbreonAnalyst",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/webprogramming260/simon-server/issues"
@@ -18,5 +18,6 @@
   "homepage": "https://github.com/TinyUmbreonAnalyst/startup/tree/startup-service#readme",
   "dependencies": {
     "express": "^4.19.2"
-  }
+  },
+  "keywords": []
 }
