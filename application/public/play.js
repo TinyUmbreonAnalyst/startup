@@ -185,6 +185,9 @@ const btnDescriptions = [
             }
         }
         clearInterval(id);
+        if (count == 20) {
+          this.time = 60001; //this is the highest time you can take to do this, theorettically
+        }
         const rock = document.querySelector(".rock-text");
         rock.textContent =  `Time: ${this.time} seconds`;
     }
@@ -352,8 +355,7 @@ const btnDescriptions = [
     async getScoreArray() {
       try {
         const totalResponse = await fetch('/api/totalScores');
-        totalScores = await totalResponse.json();
-        return totalScores;
+        return await totalResponse.json();
       } catch {
         const scoresText = localStorage.getItem('totalScores');
         if (scoresText) {
@@ -367,8 +369,7 @@ const btnDescriptions = [
       if (this.mode) {
         try {
           const bestResponse = await fetch('/api/bestScores');
-          bestScores = await bestResponse.json();
-          return bestScores;
+          return await bestResponse.json();
         } catch {
           const text = localStorage.getItem("bestScores");
           if (text) {
@@ -380,8 +381,7 @@ const btnDescriptions = [
       else {
         try {
           const timeResponse = await fetch('/api/timeScores');
-          timeScores = await timeResponse.json();
-          return timeScores;
+          return await timeResponse.json();
         } catch  {
           const text = localStorage.getItem("bestTimes");
           if (text) {

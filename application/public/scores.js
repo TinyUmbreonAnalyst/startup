@@ -1,23 +1,29 @@
-async function loadScores() {
+async function syncLocal() {
+  let totals = localStorage.getItem("totalScores");
+  let bestTimes = localStorage.getItem("bestTimes");
+  let bestScores = localStorage.getItem("bestScores");
   try {
     const totalResponse = await fetch('/api/totalScores');
-    const bestResponse = await fetch('/api/bestScores');
+    totals = await totalResponse.json();
+  } catch {}
+  try {
     const timeResponse = await fetch('/api/timeScores');
-    totalScores = await totalResponse.json();
-    bestScores = await bestResponse.json();
-    timeScores = await timeResponse.json();
+    bestTimes = await timeResponse.json();
+  }catch {}
+  try {
+    const scoreResponse = await fetch('/api/bestScores');
+    bestScores = await scoreResponse.json();
+  }catch {}
+  localStorage.setItem("totalScores", JSON.stringify(totals));
+  localStorage.setItem("bestTimes", JSON.stringify(bestTimes));
+  localStorage.setItem("bestScores", JSON.stringify(bestScores));
+  await loadScores();
+}
 
-    const tableTimeBodyEl = document.querySelector('#time-ores');
-    const tableOreBodyEl = document.querySelector('#score-ores');
-    const tableTotalBodyEl = document.querySelector('#ore-total');
-    populateTable(totalScores, tableTimeBodyEl);
-    populateTable(bestScores, tableOreBodyEl);
-    populateTable( timeScores, tableTotalBodyEl);
 
-  } 
-  catch {
-    loadScoresLocal();
-  }
+
+async function loadScores() {
+  loadScoresLocal();
 }
 
 
@@ -46,9 +52,9 @@ function loadScoresLocal() {
   const tableOreBodyEl = document.querySelector('#score-ores');
   const tableTotalBodyEl = document.querySelector('#ore-total');
 
-  populateTable(totalScores, tableTimeBodyEl);
+  populateTable(timeScores, tableTimeBodyEl);
   populateTable(bestScores, tableOreBodyEl);
-  populateTable( timeScores, tableTotalBodyEl);
+  populateTable( totalScores, tableTotalBodyEl);
 }
 
 function populateTable(scores, tableBodyEl) {
@@ -77,4 +83,4 @@ function populateTable(scores, tableBodyEl) {
   }
 }
 
-loadScores();
+syncLocal();

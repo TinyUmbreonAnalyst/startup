@@ -34,12 +34,12 @@ apiRouter.post('/totalScore', (req, res) => {
 });
 
 apiRouter.post('/bestScore', (req, res) => {
-  totalScores = updateBestScores(req.body, bestScores, true);
+  bestScores = updateBestScores(req.body, bestScores, true);
   res.send(bestScores);
 });
 
 apiRouter.post('/timeScore', (req, res) => {
-  totalScores = updateBestScores(req.body, timeScores, false);
+  timeScores = updateBestScores(req.body, timeScores, false);
   res.send(timeScores);
 });
 
@@ -89,7 +89,7 @@ function updateBestScores(scoreData, scores, mode) {
   for(const [i, validScore] of scores.entries()) {
     if(userName === validScore.name ) {
       index = -1;
-      if(this.isBetterThan(score, validScore.score, mode)){
+      if(isBetterThan(score, validScore.score, mode)){
         index = i;
       }
       break;
@@ -101,6 +101,7 @@ function updateBestScores(scoreData, scores, mode) {
   } else if(index !== -1){
     scores.splice(index, 1, newScore); //better score
   }
+
   return scores;
 }
 
