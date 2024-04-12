@@ -64,3 +64,5 @@ For this Deliverable, I did the following:
 * replaced the button in game with a actual image of a rock, with some animation
 * Replaced the x with an image of a sparkle, to better indicate for users to click them to spawn points
 * Several other bug fixes.
+* Deployed Simon in a correct subdomain, and my service to the tinyplushyumbreon.link
+  
