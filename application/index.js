@@ -15,14 +15,14 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // GetScores
-apiRouter.get('/scores', (_req, res) => {
-  res.send(scores);
+apiRouter.get('/totalScores', (_req, res) => {
+  res.send(totalScores);
 });
 
 // SubmitScore
-apiRouter.post('/score', (req, res) => {
-  scores = updateScores(req.body, scores);
-  res.send(scores);
+apiRouter.post('/totalScore', (req, res) => {
+  totalScores = updateScores(req.body, totalScores);
+  res.send(totalScores);
 });
 
 // Return the application's default page if the path is unknown
@@ -36,7 +36,8 @@ app.listen(port, () => {
 
 // updateScores considers a new score for inclusion in the high scores.
 // The high scores are saved in memory and disappear whenever the service is restarted.
-let scores = [];
+
+let totalScores = [];
 function updateScores(newScore, scores) {
   let found = false;
   for (const [i, prevScore] of scores.entries()) {

@@ -185,7 +185,7 @@ const btnDescriptions = [
             }
         }
         clearInterval(id);
-        const rock = document.querySelector(".rock");
+        const rock = document.querySelector(".rock-text");
         rock.textContent =  `Time: ${this.time} seconds`;
     }
 
@@ -234,7 +234,7 @@ const btnDescriptions = [
             else {
                 const red = document.querySelector(".red");
                 red.style.setProperty("z-index", "5");
-                this.val = this.val + 10;
+                this.val = this.val + 10 * this.modeCount()* -1;
             }
             const weakContainer = document.querySelector("div .weakContainer")
             weakContainer.style.setProperty("z-index", "4");
@@ -308,8 +308,8 @@ const btnDescriptions = [
         if (bestText) {
             bests = JSON.parse(bestText);
         }
-        scores = this.updateTotalScores(userName, totalScore, scores);
-        bests = this.updateBestScores(userName, bestScore, bests);
+        scores = this.updateTotalScoresLocal(userName, totalScore, scores);
+        bests = this.updateBestScoresLocal(userName, bestScore, bests);
         localStorage.setItem('totalScores', JSON.stringify(scores));
         if(this.mode) {
             localStorage.setItem("bestScores", JSON.stringify(bests));
@@ -334,9 +334,8 @@ const btnDescriptions = [
     }
   
     //in this case, add score. 
-    updateTotalScores(userName, totalScore, scores) {
+    updateTotalScoresLocal(userName, totalScore, scores) {
       const date = new Date().toLocaleDateString();
-
       let index = -1;
       let prevScore = 0;
       for(const [i, validScore] of scores.entries()) {
@@ -355,7 +354,7 @@ const btnDescriptions = [
       return scores;
     }
 
-    updateBestScores(userName, bestScore, scores) {
+    updateBestScoresLocal(userName, bestScore, scores) {
         const date = new Date().toLocaleDateString();
   
         let index = -2;
