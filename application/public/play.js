@@ -92,7 +92,7 @@ const btnDescriptions = [
         this.hideWeakSpot();
         this.val = 0;
         const totalScore = this.getOreTotal();
-        this.saveScore(totalScore); //ferry up the scores
+        await this.saveScore(totalScore); //ferry up the scores
     }
 
     getOreTotal() {
@@ -294,20 +294,12 @@ const btnDescriptions = [
       
   
   
-    saveScore(totalScore) {
+    async saveScore(totalScore) {
       const userName = this.getPlayerName();
       if (userName !== "Mystery player") { //not offline game
         const bestScore = this.getBestScore();
-        let scores = [];
-        let bests = [];
-        const scoresText = localStorage.getItem('totalScores');
-        const bestText = this.getBestText();
-        if (scoresText) {
-            scores = JSON.parse(scoresText);
-        }
-        if (bestText) {
-            bests = JSON.parse(bestText);
-        }
+        let scores = await this.getScoreArray();
+        let bests = await this.getBestArray();
         scores = this.updateTotalScoresLocal(userName, totalScore, scores);
         bests = this.updateBestScoresLocal(userName, bestScore, bests);
         localStorage.setItem('totalScores', JSON.stringify(scores));
@@ -326,12 +318,49 @@ const btnDescriptions = [
         return this.time;
     }
 
-    getBestText() {
-        if (this.mode) {
-            return localStorage.getItem("bestScores");
+    async getScoreArray() {
+      try {
+        const totalResponse = await fetch('/api/totalScores');
+        totalScores = await totalResponse.json();
+        return totalScores;
+      } catch {
+        const scoresText = localStorage.getItem('totalScores');
+        if (scoresText) {
+          return JSON.parse(scoresText);
         }
-        return localStorage.getItem("bestTimes");
+        return [];
+      }
     }
+
+    async getBestArray() {
+      if (this.mode) {
+        try {
+          const bestResponse = await fetch('/api/bestScores');
+          bestScores = await bestResponse.json();
+          return bestScores;
+        } catch {
+          const text = localStorage.getItem("bestScores");
+          if (text) {
+            return JSON.parse(text);
+          }
+          return [];
+        }
+      }
+      else {
+        try {
+          const timeResponse = await fetch('/api/timeScores');
+          timeScores = await timeResponse.json();
+          return timeScores;
+        } catch  {
+          const text = localStorage.getItem("bestTimes");
+          if (text) {
+            return JSON.parse(text);
+          }
+          return [];
+        }
+      }
+    }
+
   
     //in this case, add score. 
     updateTotalScoresLocal(userName, totalScore, scores) {

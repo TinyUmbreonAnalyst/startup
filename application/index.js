@@ -19,11 +19,30 @@ apiRouter.get('/totalScores', (_req, res) => {
   res.send(totalScores);
 });
 
+apiRouter.get('/bestScores', (_req, res) => {
+  res.send(bestScores);
+});
+
+apiRouter.get('/timeScores', (_req, res) => {
+  res.send(timeScores);
+});
+
 // SubmitScore
 apiRouter.post('/totalScore', (req, res) => {
-  totalScores = updateScores(req.body, totalScores);
+  totalScores = updateTotalScores(req.body, totalScores);
   res.send(totalScores);
 });
+
+apiRouter.post('/bestScore', (req, res) => {
+  totalScores = updateScores(req.body, bestScores);
+  res.send(bestScores);
+});
+
+apiRouter.post('/timeScore', (req, res) => {
+  totalScores = updateScores(req.body, timeScores);
+  res.send(timeScores);
+});
+
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
@@ -38,23 +57,16 @@ app.listen(port, () => {
 // The high scores are saved in memory and disappear whenever the service is restarted.
 
 let totalScores = [];
-function updateScores(newScore, scores) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
-    }
-  }
+let bestScores = [];
+let timeScores = [];
+function updateTotalScores(newScore, scores) {
 
-  if (!found) {
-    scores.push(newScore);
-  }
+}
 
-  if (scores.length > 10) {
-    scores.length = 10;
+function getPlayerName() {
+  const name = localStorage.getItem('userName') ?? 'Mystery player'; //will change when login is up.
+  if (name === "") {
+    return 'Mystery player';
   }
-
-  return scores;
+  return name;
 }
