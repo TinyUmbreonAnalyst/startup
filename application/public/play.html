@@ -52,7 +52,7 @@
             <fieldset class="mode-box">
               <legend class="mode-box">Mode of play</legend>
                 <label for="three">Seconds per rock break</label>
-              <input type="radio" id="rock" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
+              <input type="radio" id="rockMode" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
                 <label for="radio2">Rocks breaks per second</label>
               <input type="radio" id="time" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
             </fieldset>
@@ -62,14 +62,13 @@
       <div class="game container-fluid">
         <div class="top">100</div>
         <div class="rockContainer">
-	        <input class="rock" type="button" id ="rock" name = "varRock" value="" onclick="game.pressButton(this)"/>
           <div class="weakContainer"><input class="weakPoint" type="button" id ="weakPoint" name = "varWeak" onclick="game.weakPointHit()"/>
-            <img class="X red" src="redX.png"/>
-            <img class="X gold" src="goldX.png"/>
+            <img class="X red" src="whiteSparkle.png"/>
+            <img class="X gold" src="goldSparkle.png"/>
           </div>
-          
-          
+          <img class="rock" src="rock.png" id ="rock" onclick="game.pressButton(this)"/>
         </div>
+        <div class="rock-text"></div>
         
         <div class="bottom">0</div>
       </div>

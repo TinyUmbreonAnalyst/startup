@@ -6,19 +6,12 @@ const btnDescriptions = [
     constructor(description, el) {
       this.el = el;
       this.sound = loadSound(description.file);
-      this.paint(25);
     }
   
-    paint(level) {
-      const background = `hsl(39.2, 100%, ${level}%)`;
-      this.el.style.backgroundColor = background;
-    }
   
     async press(volume = 1.0) {
       return new Promise(async (pressResolve) => {
-        this.paint(50);
         await this.playSound(volume);
-        this.paint(25);
         pressResolve();
       });
     }
@@ -134,31 +127,31 @@ const btnDescriptions = [
             this.generateWeakSpot();
         }
         clearInterval(id);
-        const rock = document.querySelector(".rock");
-        rock.setAttribute("value", `Score: ${this.score} ore`);
+        const rock = document.querySelector(".rock-text");
+        rock.textContent = `Score: ${this.score} ore`;
     }
     
     async countDown() {
-        const rock = document.querySelector(".rock");
+        const rock = document.querySelector(".rock-text");
         rock.style.setProperty("color", "rgb(31, 148, 23)");
         this.playSound(1.0);
-        rock.setAttribute("value", "3");
+        rock.textContent = "3";
         await delay(1000);
         rock.style.setProperty("color", "yellow");
-        rock.setAttribute("value", "2");
+        rock.textContent = "2";
         await delay(1000);
         rock.style.setProperty("color", "red");
-        rock.setAttribute("value", "1");
+        rock.textContent= "1";
         await delay(1000);
         this.allowPlayer = true;
         rock.style.setProperty("color", "rgb(213, 204, 42)");
-        rock.setAttribute("value", "Start!");
+        rock.textContent= "Start!";
         this.removeText(rock);
     }
 
     async removeText(rock) {
         await delay(1000);
-        rock.setAttribute("value", "");
+        rock.textContent =  "";
     }
 
     async playSound(volume) {
@@ -193,7 +186,7 @@ const btnDescriptions = [
         }
         clearInterval(id);
         const rock = document.querySelector(".rock");
-        rock.setAttribute("value", `Time: ${this.time} seconds`);
+        rock.textContent =  `Time: ${this.time} seconds`;
     }
 
     hideWeakSpot() {
@@ -226,27 +219,27 @@ const btnDescriptions = [
         const rand = Math.random() * 10;
         if (rand >= 5) {
             let ypos = Math.random() *100 - 50;
-            let xpos = Math.random() * 100;
-            while (this.checkDistance(xpos, ypos, 50, 0) > 50 ** 2) {
+            let xpos = Math.random() * 100 - 50;
+            while (this.checkDistance(xpos, ypos, 0, 0) > 50 ** 2) {
                 ypos = Math.random() *100 - 50;
                 xpos = Math.random() * 100;
             }
             this.val = Math.round(Math.random() * 50)* this.modeCount()* -1;
             if (rand >= 9.5 ) {
                 const gold = document.querySelector(".gold");
-                gold.style.setProperty("z-index", "4");
+                gold.style.setProperty("z-index", "5");
                 this.val = this.val + 150 * this.modeCount()* -1;
                 //umb maybe?
             }
             else {
                 const red = document.querySelector(".red");
-                red.style.setProperty("z-index", "3");
+                red.style.setProperty("z-index", "5");
                 this.val = this.val + 10;
             }
             const weakContainer = document.querySelector("div .weakContainer")
-            weakContainer.style.setProperty("z-index", "3");
+            weakContainer.style.setProperty("z-index", "4");
             const weakPoint = document.querySelector(".weakPoint");
-            weakPoint.style.setProperty("z-index", "5");
+            weakPoint.style.setProperty("z-index", "6");
             weakContainer.style.setProperty("margin-left", `${xpos}%`);
             weakContainer.style.setProperty("margin-top", `${ypos}%`);
         }
@@ -292,8 +285,13 @@ const btnDescriptions = [
   
   
     getPlayerName() {
-      return localStorage.getItem('userName') ?? 'Mystery player';
+      const name = localStorage.getItem('userName') ?? 'Mystery player';
+      if (name === "") {
+        return 'Mystery player';
+      }
+      return name;
     }
+      
   
   
     saveScore(totalScore) {
@@ -380,7 +378,7 @@ const btnDescriptions = [
       }
 
     isBetterThan(newScore, oldScore) {
-        if(mode) {
+        if(this.mode) {
             return (newScore > oldScore);
         }
         return (newScore < oldScore); //time here
