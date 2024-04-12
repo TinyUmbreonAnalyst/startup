@@ -414,20 +414,19 @@ const btnDescriptions = [
       return scores;
     }
 
-    updateBestScoresLocal(userName, bestScore, scores) {
+    updateBestScoresLocal(userName, score, scores) {
         const date = new Date().toLocaleDateString();
-  
         let index = -2;
         for(const [i, validScore] of scores.entries()) {
           if(userName === validScore.name ) {
             index = -1;
-            if(this.isBetterThan(bestScore, validScore.score)){
+            if(this.isBetterThan(score, validScore.score)){
                 index = i;
             }
             break;
           }
         }
-        const newScore = { name: userName, score: bestScore, date: date};
+        const newScore = { name: userName, score: score, date: date};
         if (index === -2) {
           scores.push(newScore); //new username
         } else if(index !== -1){

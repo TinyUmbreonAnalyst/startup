@@ -63,23 +63,55 @@ function updateTotalScores(scoreData, scores) {
   const userName = scoreData.userName;
   const score = scoreData.score;
   const date = new Date().toLocaleDateString();
-      let index = -1;
-      let prevScore = 0;
-      for(const [i, validScore] of scores.entries()) {
-        if(userName === validScore.name) {
-            prevScore = validScore.score;
-            index = i;
-            break;
-        }
-      }
-      const newScore = { name: userName, score: score + prevScore, date: date};
-      if (prevScore === 0) {
-        scores.push(newScore); //new username
-      } else {
-        scores.splice(index, 1, newScore);
-      }
-      return scores;
+  let index = -1;
+  let prevScore = 0;
+  for(const [i, validScore] of scores.entries()) {
+    if(userName === validScore.name) {
+      prevScore = validScore.score;
+      index = i;
+      break;
+    }
+  }
+  const newScore = { name: userName, score: score + prevScore, date: date};
+  if (prevScore === 0) {
+    scores.push(newScore); //new username
+  } else {
+    scores.splice(index, 1, newScore);
+  }
+  return scores;
 }
+
+function updateBestScores(scoreData, scores, mode) {
+  const userName = scoreData.userName;
+  const score = scoreData.score;
+  const date = new Date().toLocaleDateString();
+  let index = -2;
+  for(const [i, validScore] of scores.entries()) {
+    if(userName === validScore.name ) {
+      index = -1;
+      if(this.isBetterThan(score, validScore.score, mode)){
+        index = i;
+      }
+      break;
+    }
+  }
+  const newScore = { name: userName, score: score, date: date};
+  if (index === -2) {
+    scores.push(newScore); //new username
+  } else if(index !== -1){
+    scores.splice(index, 1, newScore); //better score
+  }
+  return scores;
+}
+
+function isBetterThan(newScore, oldScore, mode) {
+  if(mode) {
+    return (newScore > oldScore);
+  }
+  return (newScore < oldScore); //time here
+}
+
+
 
 
 
