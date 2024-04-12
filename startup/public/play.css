@@ -1,0 +1,179 @@
+.players {
+    flex: 1;
+    width: 100%;
+    padding: 0.5em;
+  }
+  
+  .player-name {
+    color: rgb(118, 190, 210);
+  }
+  
+  #player-messages {
+    padding-top: 0.25em;
+    opacity: 0.7;
+  }
+  
+  .event {
+    color: rgb(69, 69, 69);
+  }
+  
+  .player-event {
+    color: rgb(165, 220, 235);
+  }
+  
+  .system-event {
+    color: rgb(221, 148, 40);
+  }
+  
+
+  .author {
+    padding-right: 0.3em;
+  }
+
+  .player {
+    align-self: left;
+  }
+
+  .game {
+    display: flex;
+    flex: 1;
+    background: rgb(214, 189, 160);
+    border: thick solid rgb(0,0,0);
+    box-shadow: 0 0 20px 5px rgb(69, 69, 69);
+    width: 80vw;
+    
+    justify-content: center;
+    height: 80vw;
+    position: absolute;
+    min-width: 350px;
+    min-height: 350px;
+    max-width: min(80vmin, 1000px);
+    max-height: min(80vmin, 1000px);
+  }
+
+  .game .rockContainer {
+    display: flex;
+    flex: 1;
+    z-index: 0;
+    vertical-align: middle;
+    align-self: center;
+    border-radius: 100%;
+    margin: 15%;
+    overflow: visible;
+    width: 70vw;
+    height: 70vw;
+    min-width: 350px;
+    min-height: 350px;
+    max-width: min(56vmin, 1000px);
+    max-height: min(56vmin, 1000px);
+    float: left;
+    justify-content: center;
+    position: absolute;
+  }
+
+  .game .weakContainer {
+    display: flex;
+    flex: 1;
+    z-index: -4;
+    vertical-align: middle;
+    align-self: center;
+    margin-left: 0%;
+    margin-top: 0%;
+    width: 2vw;
+    height: 2vw;
+    position: absolute;
+  }
+
+  .red {
+    z-index: -2;
+    position: inherit;
+    height: inherit;
+    width: inherit;
+  }
+
+  .gold {
+    z-index: inherit;
+    position: inherit;
+    height: inherit;
+    width: inherit;
+  }
+
+  .mode-box {
+    display: block;
+  }
+
+
+  .rock {
+    flex: 1;
+    z-index: 3;
+    image-rendering: auto;
+    shape-image-threshold: .1;
+    border: none;
+    width: 64vw;
+    height: 64vw;
+    vertical-align: middle;
+    min-width: 350px;
+    min-height: 350px;
+    align-self: center;
+    max-width: min(64vmin, 1000px);
+    max-height: min(64vmin, 1000px);
+    position: absolute;
+  }
+
+  .rock-text {
+    display: flex;
+    background: none;
+    flex: 1;
+    z-index: 4;    
+    font-size: xx-large;
+    vertical-align: middle;
+    color: rgb(213, 204, 42);
+    position: absolute;
+    align-self: center;
+    text-align: center;
+  }
+
+  .rock:active {
+    top: 2px;
+    position: absolute;
+  }
+
+  .game .top {
+    display: flex;
+    flex: 1;
+    margin-top: 1%;
+    z-index: 2;
+    position: absolute;
+    color: rgb(243, 35, 35);
+    text-align: center;
+    align-self: flex-start;
+    font-size: x-large;
+    padding: 2%;
+    float:right;
+  }
+
+  .game .bottom {
+    display: flex;
+    flex: 1;
+    position: absolute;
+    z-index: 8;
+    text-align: center;
+    align-self:flex-end;
+    color: rgb(31, 148, 23);
+    font-size: x-large;
+    margin-bottom: 1%;
+    padding: 2%;
+  }
+
+  .weakPoint {
+    position:inherit;
+    background: rgba(0, 0, 0, 0);
+    z-index: 5;
+    border: none;
+    width: 2vw;
+    height: 2vw;
+    float: left;
+    vertical-align: middle;
+    align-self: center;
+  }
+  

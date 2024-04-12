@@ -1,0 +1,24 @@
+{
+  "name": "ore-mining-server",
+  "version": "1.0.0",
+  "description": "Ore-mining game with service endpoints",
+  "main": "index.js",
+  "scripts": {
+    "dev" : "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinyUmbreonAnalyst/startup.git#startup-service"
+  },
+  "author": "TinyUmbreonAnalyst",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webprogramming260/simon-server/issues"
+  },
+  "homepage": "https://github.com/TinyUmbreonAnalyst/startup/tree/startup-service#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "keywords": []
+}
