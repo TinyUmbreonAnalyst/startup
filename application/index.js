@@ -34,12 +34,12 @@ apiRouter.post('/totalScore', (req, res) => {
 });
 
 apiRouter.post('/bestScore', (req, res) => {
-  totalScores = updateScores(req.body, bestScores);
+  totalScores = updateBestScores(req.body, bestScores, true);
   res.send(bestScores);
 });
 
 apiRouter.post('/timeScore', (req, res) => {
-  totalScores = updateScores(req.body, timeScores);
+  totalScores = updateBestScores(req.body, timeScores, false);
   res.send(timeScores);
 });
 
@@ -59,14 +59,27 @@ app.listen(port, () => {
 let totalScores = [];
 let bestScores = [];
 let timeScores = [];
-function updateTotalScores(newScore, scores) {
-
+function updateTotalScores(scoreData, scores) {
+  const userName = scoreData.userName;
+  const score = scoreData.score;
+  const date = new Date().toLocaleDateString();
+      let index = -1;
+      let prevScore = 0;
+      for(const [i, validScore] of scores.entries()) {
+        if(userName === validScore.name) {
+            prevScore = validScore.score;
+            index = i;
+            break;
+        }
+      }
+      const newScore = { name: userName, score: score + prevScore, date: date};
+      if (prevScore === 0) {
+        scores.push(newScore); //new username
+      } else {
+        scores.splice(index, 1, newScore);
+      }
+      return scores;
 }
 
-function getPlayerName() {
-  const name = localStorage.getItem('userName') ?? 'Mystery player'; //will change when login is up.
-  if (name === "") {
-    return 'Mystery player';
-  }
-  return name;
-}
+
+

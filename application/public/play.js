@@ -300,8 +300,32 @@ const btnDescriptions = [
         const bestScore = this.getBestScore();
         let scores = await this.getScoreArray();
         let bests = await this.getBestArray();
-        scores = this.updateTotalScoresLocal(userName, totalScore, scores);
-        bests = this.updateBestScoresLocal(userName, bestScore, bests);
+        try {
+          const response = await fetch('/api/totalScore', {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({userName: userName, score: totalScore}),
+          });
+    
+          // Store what the service gave us as the high scores
+          scores = await response.json();
+        } catch {
+          // If there was an error then just track scores locally
+          scores = this.updateTotalScoresLocal(userName, totalScore, scores);
+        }
+
+        try {
+          const m = this.getString();
+          const response = await fetch(`/api/${m}Score`, {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({userName: userName, score: bestScore}),
+          });
+
+          bests = await response.json();
+        } catch {
+          bests = this.updateBestScoresLocal(userName, bestScore, bests);
+        }
         localStorage.setItem('totalScores', JSON.stringify(scores));
         if(this.mode) {
             localStorage.setItem("bestScores", JSON.stringify(bests));
@@ -309,6 +333,13 @@ const btnDescriptions = [
             localStorage.setItem("bestTimes", JSON.stringify(bests));
         }
       }
+    }
+
+    getString() {
+      if (this.mode) {
+        return "best";
+      }
+      return "time";
     }
 
     getBestScore() {
@@ -363,7 +394,7 @@ const btnDescriptions = [
 
   
     //in this case, add score. 
-    updateTotalScoresLocal(userName, totalScore, scores) {
+    updateTotalScoresLocal(userName, score, scores) {
       const date = new Date().toLocaleDateString();
       let index = -1;
       let prevScore = 0;
@@ -374,7 +405,7 @@ const btnDescriptions = [
             break;
         }
       }
-      const newScore = { name: userName, score: totalScore + prevScore, date: date};
+      const newScore = { name: userName, score: score + prevScore, date: date};
       if (prevScore === 0) {
         scores.push(newScore); //new username
       } else {
