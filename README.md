@@ -65,4 +65,12 @@ For this Deliverable, I did the following:
 * Replaced the x with an image of a sparkle, to better indicate for users to click them to spawn points
 * Several other bug fixes.
 * Deployed Simon in a correct subdomain, and my service to the tinyplushyumbreon.link
+
+## Login Deliverable
+For this Deliverable, I did the following:
+* Installed MongoDB, and the other necessary imports, to set up a database for this site.
+* Debugged the database until it could sucessfully hold the data and send it to the site on call.
+* Implemented a register and login service, and their correct endpoints, in the application
+* Deployed Simon Login to simon.tinyplushyumbreon.com
+* Deployed startup to startup.tinyplushyumbreon.com
   
