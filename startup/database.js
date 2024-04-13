@@ -1,11 +1,11 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, MongoError } = require('mongodb');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('ore-breaker');
+const db = client.db('TinyDataCluster');
 const userCollection = db.collection('user');
 const totalScoreCollection = db.collection('totalScores');
 const bestScoreCollection = db.collection('bestScores');
@@ -45,24 +45,71 @@ async function createUser(email, password) {
 }
 
 function addTotalScore(score) {
-  totalScoreCollection.insertOne(score);
+  const options = {
+    upsert: true,
+  }
+  totalScoreCollection.updateOne({name: score.name}, {$set: score}, options);
 }
 
 function addBestScore(score) {
-  bestScoreCollection.insertOne(score);
+  const options = {
+    upsert: true,
+  }
+  bestScoreCollection.updateOne({name: score.name}, {$set: score}, options);
 }
 
 function addBestTime(score) {
-  timeScoreCollection.insertOne(score);
+  const options = {
+    upsert: true,
+  }
+  timeScoreCollection.updateOne({name: score.name}, {$set: score}, options);
 }
 
-function getHighScores() {
-  const query = { score: { $gt: 0, $lt: 900 } };
+function getAllScores(name) {
+  let database;
+  switch (name) {
+    case ('totalScores'):
+      database = totalScoreCollection;
+      break;
+    case ('bestScores'):
+      database = bestScoreCollection;
+    case ('timeScores'):
+      database = timeScoreCollection;
+    default:
+      throw MongoError("Unknown Database Access");
+  }
+  //inactive people get score of 60001, if you recall.
+  const query = { score: { $gt: 0, $lt: 60000 } }; 
   const options = {
-    sort: { score: -1 },
+    sort: { userName:  1}
+  };
+  const cursor = database.find(query, options);
+  return cursor.toArray();
+}
+
+function getHighScores(name) {
+  let database;
+  let direction;
+  switch (name) {
+    case ('totalScores'):
+      database = totalScoreCollection;
+      direction = -1;
+      break;
+    case ('bestScores'):
+      database = bestScoreCollection;
+      direction = -1;
+    case ('timeScores'):
+      database = timeScoreCollection;
+      direction = 1;
+    default:
+      throw MongoError("Unknown Database Access");
+  }
+  const query = { score: { $gt: 0, $lt: 60000 } };
+  const options = {
+    sort: { score: direction },
     limit: 10,
   };
-  const cursor = scoreCollection.find(query, options);
+  const cursor = database.find(query, options);
   return cursor.toArray();
 }
 
@@ -70,6 +117,9 @@ module.exports = {
   getUser,
   getUserByToken,
   createUser,
-  addScore,
+  addTotalScore,
+  addBestScore,
+  addBestTime,
   getHighScores,
+  getAllScores,
 };

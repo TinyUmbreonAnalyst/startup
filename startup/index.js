@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const DB = require('./database.js');
 
+const authCookieName = 'token';
+
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -83,32 +85,49 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
+secureApiRouter.get('/highTotalScores', async (_req, res) => {
+  const scores = await DB.getHighScores('totalScores')
+  res.send(scores);
+  });
+
+secureApiRouter.get('/highBestScores', async (_req, res) => {
+    const scores = await DB.getHighScores('bestScores');
+    res.send(scores);
+  });
+
+secureApiRouter.get('/highTimeScores', async (_req, res) => {
+  const scores = await DB.getHighScores('timeScores');
+  res.send(scores);
+});
 
 // GetScores
-apiRouter.get('/totalScores', (_req, res) => {
-  res.send(totalScores);
+secureApiRouter.get('/totalScores', async (_req, res) => {
+  const scores = await DB.getAllScores('totalScores');
+  res.send(scores);
 });
 
-apiRouter.get('/bestScores', (_req, res) => {
-  res.send(bestScores);
+secureApiRouter.get('/bestScores', async (_req, res) => {
+  const scores = await DB.getAllScores('bestScores');
+  res.send(scores);
 });
 
-apiRouter.get('/timeScores', (_req, res) => {
-  res.send(timeScores);
+secureApiRouter.get('/timeScores',  async (_req, res) => {
+  const scores = await DB.getAllScores('timeScores');
+  res.send(scores);
 });
 
 // SubmitScore
-apiRouter.post('/totalScore', (req, res) => {
+secureApiRouter.post('/totalScore', (req, res) => {
   totalScores = updateTotalScores(req.body, totalScores);
   res.send(totalScores);
 });
 
-apiRouter.post('/bestScore', (req, res) => {
+secureApiRouter.post('/bestScore', (req, res) => {
   bestScores = updateBestScores(req.body, bestScores, true);
   res.send(bestScores);
 });
 
-apiRouter.post('/timeScore', (req, res) => {
+secureApiRouter.post('/timeScore', (req, res) => {
   timeScores = updateBestScores(req.body, timeScores, false);
   res.send(timeScores);
 });
