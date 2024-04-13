@@ -402,13 +402,13 @@ const btnDescriptions = [
       let index = -1;
       let prevScore = 0;
       for(const [i, validScore] of scores.entries()) {
-        if(userName === validScore.name) {
+        if(userName === validScore.userName) {
             prevScore = validScore.score;
             index = i;
             break;
         }
       }
-      const newScore = { name: userName, score: score + prevScore, date: date};
+      const newScore = { userName: userName, score: score + prevScore, date: date};
       if (prevScore === 0) {
         scores.push(newScore); //new username
       } else {
@@ -421,7 +421,7 @@ const btnDescriptions = [
         const date = new Date().toLocaleDateString();
         let index = -2;
         for(const [i, validScore] of scores.entries()) {
-          if(userName === validScore.name ) {
+          if(userName === validScore.userName ) {
             index = -1;
             if(this.isBetterThan(score, validScore.score)){
                 index = i;

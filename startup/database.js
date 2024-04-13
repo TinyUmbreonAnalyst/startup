@@ -49,7 +49,7 @@ async function addTotalScore(score) {
     upsert: true
   }
   if (await totalScoreCollection.estimatedDocumentCount() > 0) {
-    totalScoreCollection.updateOne({name: score.name}, {$inc: {score: score.score}, $set: {date: score.date}}, options);
+    totalScoreCollection.updateOne({userName: score.userName}, {$inc: {score: score.score}, $set: {date: score.date, ip: score.ip}}, options);
   }
   else {
     totalScoreCollection.insertOne(score);
@@ -61,7 +61,7 @@ async function addBestScore(score) {
     upsert: true
   }
   if (await bestScoreCollection.estimatedDocumentCount() > 0){
-    bestScoreCollection.updateOne({name: score.name}, {$set:{date: score.date, score: {$max: score.score}}}, options);
+    bestScoreCollection.updateOne({userName: score.userName}, {$set:{date: score.date, ip: score.ip}, $max: {score: score.score}}, options);
   }
   else {
     bestScoreCollection.insertOne(score);
@@ -73,7 +73,7 @@ async function addBestTime(score) {
     upsert: true
   }
   if (await timeScoreCollection.estimatedDocumentCount() > 0) {
-    timeScoreCollection.updateOne({name: score.name}, {$set: {date: score.date, score: {$min: score.score}}}, options); //why
+    timeScoreCollection.updateOne({userName: score.userName}, {$set: {date: score.date, ip: score.ip}, $min: {score: score.score}}, options); //why
   }
   else {
     timeScoreCollection.insertOne(score);
