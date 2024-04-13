@@ -44,25 +44,40 @@ async function createUser(email, password) {
   return user;
 }
 
-function addTotalScore(score) {
+async function addTotalScore(score) {
   const options = {
-    upsert: true,
+    upsert: true
   }
-  totalScoreCollection.updateOne({name: score.name}, {$inc: score}, options);
+  if (await totalScoreCollection.estimatedDocumentCount() > 0) {
+    totalScoreCollection.updateOne({name: score.name}, {$inc: {score: score.score}, $set: {date: score.date}}, options);
+  }
+  else {
+    totalScoreCollection.insertOne(score);
+  }
 }
 
-function addBestScore(score) {
+async function addBestScore(score) {
   const options = {
-    upsert: true,
+    upsert: true
   }
-  bestScoreCollection.updateOne({name: score.name}, {$max: score}, options);
+  if (await bestScoreCollection.estimatedDocumentCount() > 0){
+    bestScoreCollection.updateOne({name: score.name}, {$set:{date: score.date, score: {$max: score.score}}}, options);
+  }
+  else {
+    bestScoreCollection.insertOne(score);
+  }
 }
 
-function addBestTime(score) {
+async function addBestTime(score) {
   const options = {
-    upsert: true,
+    upsert: true
   }
-  timeScoreCollection.updateOne({name: score.name}, {$min: score}, options);
+  if (await timeScoreCollection.estimatedDocumentCount() > 0) {
+    timeScoreCollection.updateOne({name: score.name}, {$set: {date: score.date, score: {$min: score.score}}}, options); //why
+  }
+  else {
+    timeScoreCollection.insertOne(score);
+  }
 }
 
 function getAllScores(name) {
@@ -73,10 +88,13 @@ function getAllScores(name) {
       break;
     case ('bestScores'):
       database = bestScoreCollection;
+      break;
     case ('timeScores'):
       database = timeScoreCollection;
+      break;
     default:
-      throw MongoError("Unknown Database Access");
+      throw new MongoError("Unknown Database Access");
+      
   }
   //inactive people get score of 60001, if you recall.
   const query = { score: { $gt: 0, $lt: 60000 } }; 
@@ -98,11 +116,13 @@ function getHighScores(name) {
     case ('bestScores'):
       database = bestScoreCollection;
       direction = -1;
+      break;
     case ('timeScores'):
       database = timeScoreCollection;
       direction = 1;
+      break;
     default:
-      throw MongoError("Unknown Database Access");
+      throw new MongoError("Unknown Database Access");
   }
   const query = { score: { $gt: 0, $lt: 60000 } };
   const options = {
