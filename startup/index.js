@@ -85,6 +85,7 @@ secureApiRouter.use(async (req, res, next) => {
   }
 });
 
+//getHighScore, for the Leaderboard. This is restricted to top 10, for now.
 secureApiRouter.get('/highTotalScores', async (_req, res) => {
   const scores = await DB.getHighScores('totalScores')
   res.send(scores);
@@ -100,7 +101,7 @@ secureApiRouter.get('/highTimeScores', async (_req, res) => {
   res.send(scores);
 });
 
-// GetScores
+// GetScores (for play, we need to still check username for flagging to update PB)
 secureApiRouter.get('/totalScores', async (_req, res) => {
   const scores = await DB.getAllScores('totalScores');
   res.send(scores);
@@ -117,19 +118,25 @@ secureApiRouter.get('/timeScores',  async (_req, res) => {
 });
 
 // SubmitScore
-secureApiRouter.post('/totalScore', (req, res) => {
-  totalScores = updateTotalScores(req.body, totalScores);
-  res.send(totalScores);
+secureApiRouter.post('/totalScore',  async(req, res) => {
+  const totalScore = { ...req.body, ip: req.ip };
+  await DB.addTotalScore(totalScore);
+  const scores = DB.getHighScores("totalScores");
+  res.send(scores);
 });
 
-secureApiRouter.post('/bestScore', (req, res) => {
-  bestScores = updateBestScores(req.body, bestScores, true);
-  res.send(bestScores);
+secureApiRouter.post('/bestScore', async (req, res) => {
+  const totalScore = { ...req.body, ip: req.ip };
+  await DB.addBestScore(totalScore);
+  const scores = DB.getHighScores("bestScores");
+  res.send(scores);
 });
 
-secureApiRouter.post('/timeScore', (req, res) => {
-  timeScores = updateBestScores(req.body, timeScores, false);
-  res.send(timeScores);
+secureApiRouter.post('/timeScore', async (req, res) => {
+  const totalScore = { ...req.body, ip: req.ip };
+  await DB.addTimeScore(totalScore);
+  const scores = DB.getHighScores("timeScores");
+  res.send(scores);
 });
 
 // Default error handler
@@ -155,64 +162,6 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-// updateScores considers a new score for inclusion in the high scores.
-// The high scores are saved in memory and disappear whenever the service is restarted.
-
-let totalScores = [];
-let bestScores = [];
-let timeScores = [];
-function updateTotalScores(scoreData, scores) {
-  const userName = scoreData.userName;
-  const score = scoreData.score;
-  const date = new Date().toLocaleDateString();
-  let index = -1;
-  let prevScore = 0;
-  for(const [i, validScore] of scores.entries()) {
-    if(userName === validScore.name) {
-      prevScore = validScore.score;
-      index = i;
-      break;
-    }
-  }
-  const newScore = { name: userName, score: score + prevScore, date: date};
-  if (prevScore === 0) {
-    scores.push(newScore); //new username
-  } else {
-    scores.splice(index, 1, newScore);
-  }
-  return scores;
-}
-
-function updateBestScores(scoreData, scores, mode) {
-  const userName = scoreData.userName;
-  const score = scoreData.score;
-  const date = new Date().toLocaleDateString();
-  let index = -2;
-  for(const [i, validScore] of scores.entries()) {
-    if(userName === validScore.name ) {
-      index = -1;
-      if(isBetterThan(score, validScore.score, mode)){
-        index = i;
-      }
-      break;
-    }
-  }
-  const newScore = { name: userName, score: score, date: date};
-  if (index === -2) {
-    scores.push(newScore); //new username
-  } else if(index !== -1){
-    scores.splice(index, 1, newScore); //better score
-  }
-
-  return scores;
-}
-
-function isBetterThan(newScore, oldScore, mode) {
-  if(mode) {
-    return (newScore > oldScore);
-  }
-  return (newScore < oldScore); //time here
-}
 
 
 

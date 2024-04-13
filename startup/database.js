@@ -48,21 +48,21 @@ function addTotalScore(score) {
   const options = {
     upsert: true,
   }
-  totalScoreCollection.updateOne({name: score.name}, {$set: score}, options);
+  totalScoreCollection.updateOne({name: score.name}, {$inc: score}, options);
 }
 
 function addBestScore(score) {
   const options = {
     upsert: true,
   }
-  bestScoreCollection.updateOne({name: score.name}, {$set: score}, options);
+  bestScoreCollection.updateOne({name: score.name}, {$max: score}, options);
 }
 
 function addBestTime(score) {
   const options = {
     upsert: true,
   }
-  timeScoreCollection.updateOne({name: score.name}, {$set: score}, options);
+  timeScoreCollection.updateOne({name: score.name}, {$min: score}, options);
 }
 
 function getAllScores(name) {

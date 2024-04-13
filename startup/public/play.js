@@ -299,15 +299,18 @@ const btnDescriptions = [
   
     async saveScore(totalScore) {
       const userName = this.getPlayerName();
+      const date = new Date().toLocaleDateString();
       if (userName !== "Mystery player") { //not offline game
         const bestScore = this.getBestScore();
-        let scores = await this.getScoreArray();
+        // The only reson we have this is to ensure that, in case of an outage, the game can still run.
+        // Probably could be optimized away, but I am too lazy to do it. Service calls for this still exist.
+        let scores = await this.getScoreArray(); 
         let bests = await this.getBestArray();
         try {
           const response = await fetch('/api/totalScore', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: JSON.stringify({userName: userName, score: totalScore}),
+            body: JSON.stringify({userName: userName, score: totalScore, date: date}),
           });
     
           // Store what the service gave us as the high scores
@@ -322,7 +325,7 @@ const btnDescriptions = [
           const response = await fetch(`/api/${m}Score`, {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: JSON.stringify({userName: userName, score: bestScore}),
+            body: JSON.stringify({userName: userName, score: bestScore, date: date}),
           });
 
           bests = await response.json();

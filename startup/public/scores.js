@@ -3,15 +3,15 @@ async function syncLocal() {
   let bestTimes = localStorage.getItem("bestTimes");
   let bestScores = localStorage.getItem("bestScores");
   try {
-    const totalResponse = await fetch('/api/totalScores');
+    const totalResponse = await fetch('/api/highTotalScores');
     totals = await totalResponse.json();
   } catch {}
   try {
-    const timeResponse = await fetch('/api/timeScores');
+    const timeResponse = await fetch('/api/highTimeScores');
     bestTimes = await timeResponse.json();
   }catch {}
   try {
-    const scoreResponse = await fetch('/api/bestScores');
+    const scoreResponse = await fetch('/api/highBestScores');
     bestScores = await scoreResponse.json();
   }catch {}
   localStorage.setItem("totalScores", JSON.stringify(totals));
