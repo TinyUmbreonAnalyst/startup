@@ -66,7 +66,7 @@ function populateTable(scores, tableBodyEl) {
       const dateTdEl = document.createElement('td');
 
       positionTdEl.textContent = i + 1;
-      nameTdEl.textContent = score.name;
+      nameTdEl.textContent = score.userName;
       scoreTdEl.textContent = score.score;
       dateTdEl.textContent = score.date;
 
