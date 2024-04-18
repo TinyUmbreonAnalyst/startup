@@ -73,4 +73,12 @@ For this Deliverable, I did the following:
 * Implemented a register and login service, and their correct endpoints, in the application
 * Deployed Simon Login to simon.tinyplushyumbreon.com
 * Deployed startup to startup.tinyplushyumbreon.com
-  
+
+## WebSocket Deliverable
+For this Deliverable, I did the following:
+* Installed node.ws into the application
+* Made backend endpoints to listen for notification whenever an online user finishes and starts a game, with thier score
+* Made frontend WS endpoints to notify others that the user started a game, and finished it
+* Deployed Simon Websocket to startup.tinyplushyumbreon.link
+* Deployed Startup to startup.tinyplushyumbreon.link
+* also changed a bit of fonts for the mode-selection bot to make it look better, and the same for the websocket messages.
