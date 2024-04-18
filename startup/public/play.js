@@ -1,3 +1,7 @@
+const TimeEndEvent = 'timeEnd';
+const ThousandMineEndEvent = 'mineEnd';
+const GameStartEvent = 'gameStart';
+
 const btnDescriptions = [
     { file: 'mine.mp3'},
   ];
@@ -79,6 +83,9 @@ const btnDescriptions = [
     }
 
     async startGame() {
+
+      // Let other players know a new game has started
+        this.broadcastEvent(this.getPlayerName(), GameStartEvent, {});
         this.setMode();
         document.querySelectorAll(".mode-box").forEach((el) => {
             el.style.setProperty("display", "none");
@@ -312,6 +319,15 @@ const btnDescriptions = [
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({userName: userName, score: totalScore, date: date}),
           });
+
+          // Let other players know the game has concluded
+          if (this.mode) {
+            this.broadcastEvent(userName, TimeEndEvent, bestScore);
+          }
+          else {
+            this.broadcastEvent(userName, ThousandMineEndEvent, bestScore);
+          }
+          
     
           // Store what the service gave us as the high scores
           scores = await response.json();
@@ -444,6 +460,47 @@ const btnDescriptions = [
         }
         return (newScore < oldScore); //time here
     }
+
+  // Functionality for peer communication using WebSocket
+    configureWebSocket() {
+      const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+      this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+      this.socket.onopen = (event) => {
+        this.displayMsg('system', 'game', 'connected');
+      };
+      this.socket.onclose = (event) => {
+        this.displayMsg('system', 'game', 'disconnected');
+      };
+      this.socket.onmessage = async (event) => {
+        const msg = JSON.parse(await event.data.text());
+        switch (msg.type){
+          case GameStartEvent:
+            this.displayMsg('player', msg.from, `hauled a new rock for mining!`);
+            break;
+          case ThousandMineEndEvent:
+            this.displayMsg('player', msg.from, `mined the 1000 sized rock in ${msg.value.score}!`);
+            break;
+          case TimeEndEvent:
+            this.displayMsg('player', msg.from, `mined ${msg.value.score} ore before the cave collaspsed!`);
+            break;
+        }
+      };
+    }
+
+    displayMsg(cls, from, msg) {
+      const chatText = document.querySelector('#player-messages');
+      chatText.innerHTML =
+        `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+    }
+
+    broadcastEvent(from, type, value) {
+      const event = {
+        from: from,
+        type: type,
+        value: value,
+      };
+      this.socket.send(JSON.stringify(event));
+    }
   }
   
   const game = new Game();
@@ -461,16 +518,5 @@ const btnDescriptions = [
     return audio;
   }
   
-  // Simulate chat messages that will come over WebSocket
-  setInterval(() => {
-    const score = Math.floor(Math.random() * 100);
-    const chatText = document.querySelector('#player-messages');
-    chatText.innerHTML = chatText.innerHTML
-       +`<div class="event"><span class="player-event">Tiny</span> broke rock in ${score} seconds!</div>`;
-    if (chatText.childElementCount > 9) {
-        while (chatText.childElementCount > 9) {
-            chatText.removeChild(chatText.childNodes[0]);
-        }
-    }
-  }, 60000);
+
   
