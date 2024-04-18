@@ -100,8 +100,21 @@
 
   .mode-box {
     display: block;
-    color: rgb(155, 136, 84);
-    text-align: left;
+    color:lightsteelblue;
+    text-align: center;
+    width: 50%;
+  }
+
+  #rockMode {
+    color: rgb(255, 101, 101);
+  }
+
+  #timeText {
+    color: rgb(89, 225, 89);
+  }
+
+  .submit-button {
+    padding-top: 10px;
   }
 
 
@@ -165,6 +178,10 @@
     font-size: x-large;
     margin-bottom: 1%;
     padding: 2%;
+  }
+  .event {
+    white-space: pre-wrap;
+    color: gold;
   }
 
   .weakPoint {
