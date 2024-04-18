@@ -42,19 +42,16 @@
     <main class="bg-secondary">
         <div class="players">
           Player:
-          <span class="player-name">You</span>
+          <span class="player-name"></span>
           <div id="player-messages">
-            <div class="event"><span class="player-event">You</span> broke rock in 30 seconds!</div>
-            <div class="event"><span class="player-event">Tiny</span> broke rock in 42 seconds!</div>
-            <div class="event"><span class="system-event">Game</span> connected</div>
           </div>
           <div class="mode-box">
             <fieldset class="mode-box">
-              <legend class="mode-box">Mode of play</legend>
-                <label for="three">1000 Ore Mode</label>
-              <input type="radio" id="rockMode" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
-                <label for="radio2">Time Mode</label>
-              <input type="radio" id="time" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
+              <legend>Mode of play</legend>
+                <label for="three" id="rockMode">1000 Ore Mode</label>
+              <input type="radio" name="varRadio" value="rockCheck" onclick="game.setMode()"/>
+                <label for="radio2" id="time">Time Mode</label>
+              <input type="radio" name="varRadio" value="timeCheck" checked onclick="game.setMode()"/>
             </fieldset>
             <span class="submit-button mode-box"> <button class="btn btn-primary" onclick="game.startGame()">Start Game</button> </span>
           </div>

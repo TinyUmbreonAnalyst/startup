@@ -56,6 +56,8 @@ const btnDescriptions = [
   
       const playerNameEl = document.querySelector('.player-name');
       playerNameEl.textContent = this.getPlayerName();
+
+      this.configureWebSocket();
     }
 
     //time is true
@@ -307,8 +309,10 @@ const btnDescriptions = [
     async saveScore(totalScore) {
       const userName = this.getPlayerName();
       const date = new Date().toLocaleDateString();
+      
       if (userName !== "Mystery player") { //not offline game
         const bestScore = this.getBestScore();
+        const newScore = { name: userName, score: bestScore, date: date };
         // The only reson we have this is to ensure that, in case of an outage, the game can still run.
         // Probably could be optimized away, but I am too lazy to do it. Service calls for this still exist.
         let scores = await this.getScoreArray(); 
@@ -322,10 +326,10 @@ const btnDescriptions = [
 
           // Let other players know the game has concluded
           if (this.mode) {
-            this.broadcastEvent(userName, TimeEndEvent, bestScore);
+            this.broadcastEvent(userName, TimeEndEvent, newScore);
           }
           else {
-            this.broadcastEvent(userName, ThousandMineEndEvent, bestScore);
+            this.broadcastEvent(userName, ThousandMineEndEvent, newScore);
           }
           
     
@@ -478,10 +482,10 @@ const btnDescriptions = [
             this.displayMsg('player', msg.from, `hauled a new rock for mining!`);
             break;
           case ThousandMineEndEvent:
-            this.displayMsg('player', msg.from, `mined the 1000 sized rock in ${msg.value.score}!`);
+            this.displayMsg('player', msg.from, `mined the 1000 sized \n\trock in ${msg.value.score}!`);
             break;
           case TimeEndEvent:
-            this.displayMsg('player', msg.from, `mined ${msg.value.score} ore before the cave collaspsed!`);
+            this.displayMsg('player', msg.from, `mined ${msg.value.score} ore before the \n\tcave collapsed!`);
             break;
         }
       };
